@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Builder\**" />
+    <EmbeddedResource Remove="Builder\**" />
+    <None Remove="Builder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="ConvertHelper.cs" />
+    <Compile Remove="DateTimeHelper.cs" />
+    <Compile Remove="FileHelper.cs" />
+    <Compile Remove="FormHelper.cs" />
+    <Compile Remove="JsonHelper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Builder\BuilderModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hikari.DbCore" Version="1.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Win.Models\Win.Models.csproj" />
+  </ItemGroup>
+
+</Project>
