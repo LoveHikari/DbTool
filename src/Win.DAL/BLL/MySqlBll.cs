@@ -51,7 +51,7 @@ namespace Win.DAL.BLL
         /// <returns></returns>
         public DataTable GetColumnTable(string tablename)
         {
-            DataTable datatable = _db.ExecuteDataTable($@"SELECT a.table_schema AS 'TableName',b.TABLE_COMMENT AS 'TableDescription',a.ordinal_position AS 'ColumnOrder',a.column_name AS 'ColumnName',
+            DataTable datatable = _db.ExecuteDataTable($@"SELECT b.TABLE_NAME AS 'TableName',b.TABLE_COMMENT AS 'TableDescription',a.ordinal_position AS 'ColumnOrder',a.column_name AS 'ColumnName',
                                 CASE a.extra WHEN '' THEN 'false' ELSE 'true' END AS 'IsIdentity',
                                 CASE a.column_key WHEN '' THEN 'false' ELSE 'true' END AS 'IsPrimaryKey',
                                 a.DATA_TYPE AS 'TypeName',
