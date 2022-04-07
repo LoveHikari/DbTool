@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbTool", "src\DbTool\DbTool
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AFBF0016-2649-4412-9043-99EAF5A8AB1F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject1", "TestProject1\TestProject1.csproj", "{F03D9F13-2AC4-40DF-98F0-692C5406AA14}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,10 +35,6 @@ Global
 		{813F4F1F-DF3D-45D8-B732-3D8E3CF8DE44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{813F4F1F-DF3D-45D8-B732-3D8E3CF8DE44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{813F4F1F-DF3D-45D8-B732-3D8E3CF8DE44}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F03D9F13-2AC4-40DF-98F0-692C5406AA14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F03D9F13-2AC4-40DF-98F0-692C5406AA14}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F03D9F13-2AC4-40DF-98F0-692C5406AA14}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F03D9F13-2AC4-40DF-98F0-692C5406AA14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,7 +5,7 @@ using Win.Models;
 
 namespace Win.DAL.BLL
 {
-    public class SqlServerBll
+    public class SqlServerBll : IBaseBll
     {
         private static string _connectionString;
 

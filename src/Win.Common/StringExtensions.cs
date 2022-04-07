@@ -5,29 +5,29 @@ namespace Win.Common
 {
     public static class StringExtensions
     {
-        public static string ToPascalCase(this string value)
-        {
-            if (string.IsNullOrEmpty(value))
-                return value;
+        //public static string ToPascalCase(this string value)
+        //{
+        //    if (string.IsNullOrEmpty(value))
+        //        return value;
 
-            if (value.IndexOf('_') >= 0)
-            {
-                var parts = value.Split('_');
-                var sb = new StringBuilder();
-                foreach (var part in parts)
-                {
-                    if (string.IsNullOrEmpty(part))
-                        continue;
-                    var str = part.ToCamelCase();
-                    sb.Append(char.ToUpper(str[0]) + str.Substring(1, str.Length - 1));
-                }
+        //    if (value.IndexOf('_') >= 0)
+        //    {
+        //        var parts = value.Split('_');
+        //        var sb = new StringBuilder();
+        //        foreach (var part in parts)
+        //        {
+        //            if (string.IsNullOrEmpty(part))
+        //                continue;
+        //            var str = part.ToCamelCase();
+        //            sb.Append(char.ToUpper(str[0]) + str.Substring(1, str.Length - 1));
+        //        }
 
-                return sb.ToString();
-            }
+        //        return sb.ToString();
+        //    }
 
-            var camelCase = value.ToCamelCase();
-            return char.ToUpper(camelCase[0]) + camelCase.Substring(1, camelCase.Length - 1);
-        }
+        //    var camelCase = value.ToCamelCase();
+        //    return char.ToUpper(camelCase[0]) + camelCase.Substring(1, camelCase.Length - 1);
+        //}
 
         public static string ToCamelCase(this string value)
         {

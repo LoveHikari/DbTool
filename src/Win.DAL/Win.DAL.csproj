@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="BLL\MySqlBll.cs" />
     <Compile Remove="BLL\SqlBll.cs" />
     <Compile Remove="BLL\SQLiteBll.cs" />
   </ItemGroup>

@@ -18,7 +18,7 @@ namespace DbTool.ViewModels
 {
     public class PageDbFirstViewModel
     {
-        private SqlServerBll _bll;
+        private IBaseBll _bll;
         public Models.PageDbFirstModel Model { get; set; }
 
 
@@ -42,7 +42,7 @@ namespace DbTool.ViewModels
             {
                 return new DelegateCommand<object>(delegate (object obj)
                 {
-                    string providerName = obj as string;
+                    string providerName = (obj as string)!;
                     InitTreeView(providerName);
                 });
             }
@@ -54,7 +54,7 @@ namespace DbTool.ViewModels
             if (items.Count != 0)
             {
                 var row = items[0] as DataRowView;
-                var tableName = row[0].ToString();
+                var tableName = row[0].ToString();  // 选择的表
                 var dt = _bll.GetColumnTable(tableName);
 
 
@@ -111,15 +111,14 @@ namespace DbTool.ViewModels
                     //dt = Win.DAL.BLL.SQLiteBll.GetAllTable();
                     break;
                 case "MySql":
-                    //dt = Win.DAL.BLL.MySqlBll.Instance.GetAllTable();
+                    _bll = new MySqlBll(Model.ConnectionString);
                     break;
                 case "Sql Server":
                 default:
                     _bll = new SqlServerBll(Model.ConnectionString);
-                    Model.TableList = _bll.GetAllTable().DefaultView;
                     break;
             }
-
+            Model.TableList = _bll.GetAllTable().DefaultView;
         }
     }
 }
