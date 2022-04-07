@@ -2,7 +2,8 @@
 
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net6.0-windows</TargetFramework>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
 		<ApplicationIcon>DbTool.ico</ApplicationIcon>
 	</PropertyGroup>
@@ -14,8 +15,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="Hikari.WPF" Version="6.0.0-preview.3.1.0" />
-		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
-		<PackageReference Include="Ookii.Dialogs.Wpf" Version="3.1.0" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+		<PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,14 +1,15 @@
-﻿using System.Collections;
+﻿using DbTool.Models;
+using Hikari.Common;
+using Hikari.Common.IO;
+using Hikari.WPF.MVVM;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
-using DbTool.Models;
-using Hikari.Common;
-using Hikari.WPF.MVVM;
-using ServiceStack;
+using Win.Common;
 using Win.Common.Builder;
 using Win.DAL.BLL;
 using Win.Models;
@@ -50,13 +51,17 @@ namespace DbTool.ViewModels
         public ICommand SelectionChangedCommand => new DelegateCommand<object>(delegate (object obj)
         {
             var items = obj as IList;
-            var row = items[0] as DataRowView;
-            var tableName = row[0].ToString();
-            var dt = _bll.GetColumnTable(tableName);
+            if (items.Count != 0)
+            {
+                var row = items[0] as DataRowView;
+                var tableName = row[0].ToString();
+                var dt = _bll.GetColumnTable(tableName);
 
 
-            Model.TableFieldList = dt.DefaultView;
-            Model.PrimaryKeyList = dt.AsEnumerable().Where(m => m.Field<string>("IsPrimaryKey") == "true").Select(m => m.Field<string>("ColumnName")).ToList();
+                Model.TableFieldList = dt.DefaultView;
+                Model.PrimaryKeyList = dt.AsEnumerable().Where(m => m.Field<string>("IsPrimaryKey") == "true").Select(m => m.Field<string>("ColumnName")).ToList();
+            }
+            
         });
         /// <summary>
         /// 生成代码命令
@@ -86,7 +91,7 @@ namespace DbTool.ViewModels
                     var builder = new BuilderModel(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix);
                     var b = builder.CreatModel();
                     string modelName = Model.ModelPrefix + tableName.ToPascalCase() + Model.ModelSuffix;
-                    FileHelper.WriteFile(System.IO.Path.Combine(path, modelName + ".cs"), b);
+                    FileHelper.WriteAsync(System.IO.Path.Combine(path, modelName + ".cs"), b).GetAwaiter().GetResult();
                 }
 
                 MessageBox.Show("生成成功！");

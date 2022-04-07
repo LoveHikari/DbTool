@@ -1,5 +1,4 @@
 using Hikari.Common;
-using ServiceStack;
 using System.Collections.Generic;
 using System.Text;
 using Win.Models;
@@ -41,9 +40,10 @@ namespace Win.Common.Builder
         {
             StringBuilder strclass = new StringBuilder();
             strclass.AppendLine("using System;");
-            strclass.AppendLine("using System.Runtime.Serialization;");
-            strclass.AppendLine("namespace " + _modelpath);
-            strclass.AppendLine("{");
+            strclass.AppendLine("using Microsoft.EntityFrameworkCore;");
+            strclass.AppendLine("using System.ComponentModel.DataAnnotations;");
+            strclass.AppendLine("using System.ComponentModel.DataAnnotations.Schema;");
+            strclass.AppendLine("namespace " + _modelpath + ";");
             strclass.AppendSpaceLine(1, "/// <summary>");
             if (_fieldlist[0].TableDescription.Length > 0)
             {
@@ -59,7 +59,6 @@ namespace Win.Common.Builder
             strclass.AppendSpaceLine(1, "{");
             strclass.AppendLine(CreatModelMethod());
             strclass.AppendSpaceLine(1, "}");
-            strclass.AppendLine("}");
             strclass.AppendLine("");
 
             return strclass.ToString();
@@ -116,7 +115,11 @@ namespace Win.Common.Builder
                     strclass2.AppendSpaceLine(2, "[Required(AllowEmptyStrings = true)]");
                 }
 
-                strclass2.AppendSpaceLine(2, $"[Comment(\"{field.Description}\")]");
+                if (!string.IsNullOrWhiteSpace(field.Description))
+                {
+                    strclass2.AppendSpaceLine(2, $"[Comment(\"{field.Description}\")]");
+                }
+                
                 strclass2.AppendSpaceLine(2, "public " + columnType + isnull + " " + field.ColumnName.ToPascalCase() + " { get; set; }");// Ù–‘
             }
             strclass.Append(strclass2);

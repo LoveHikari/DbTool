@@ -64,14 +64,14 @@ namespace Win.Common
         {
             string[] SqlTypeNames = new string[] { "int", "varchar","bit" ,"datetime","decimal","float","image","money",
                 "ntext","nvarchar","smalldatetime","smallint","text","bigint","binary","char","nchar","numeric",
-                "real","smallmoney", "sql_variant","timestamp","tinyint","uniqueidentifier","varbinary"};
+                "real","smallmoney", "sql_variant","timestamp","tinyint","uniqueidentifier","varbinary", "date"};
 
             string[] DotNetTypes = new string[] {"int", "string","bool" ,"DateTime","Decimal","Double","Byte[]","Single",
                 "string","string","DateTime","Int16","string","Int64","Byte[]","string","string","Decimal",
-                "Single","Single", "Object","Byte[]","Byte","Guid","Byte[]"};
+                "Single","Single", "Object","Byte[]","Byte","Guid","Byte[]", "DateOnly"};
 
             int i = Array.IndexOf(SqlTypeNames, sqlTypeString.ToLower());
-
+            
             return DotNetTypes[i];
         }
 
