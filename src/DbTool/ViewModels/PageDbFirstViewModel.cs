@@ -32,6 +32,7 @@ namespace DbTool.ViewModels
             {
                 "Sql Server", "MySql"
             };
+            Model.CodeLanguage = 0;
         }
         /// <summary>
         /// 连接命令
@@ -69,7 +70,13 @@ namespace DbTool.ViewModels
         public ICommand GenerateCodeCommand => new DelegateCommand<object>(delegate (object obj)
         {
             List<ColumnModel> models = Model.TableFieldList.Table.ToList<ColumnModel>();
-            var builder = new BuilderModel(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix);
+            // var builder = new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix);
+            BuilderModel builder = Model.CodeLanguage switch
+            {
+                0 => new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix),
+                1 => new BuilderModelJavaJpa(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix),
+                _ => new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix)
+            };
             var b = builder.CreatModel();
             Model.CodeContent = b;
         });
@@ -88,10 +95,22 @@ namespace DbTool.ViewModels
                     var tableName = row[0].ToString();
                     var dt = _bll.GetColumnTable(tableName);
                     List<ColumnModel> models = dt.ToList<ColumnModel>();
-                    var builder = new BuilderModel(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix);
+                    //var builder = new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix);
+                    BuilderModel builder = Model.CodeLanguage switch
+                    {
+                        0 => new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix),
+                        1 => new BuilderModelJavaJpa(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix),
+                        _ => new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix)
+                    };
                     var b = builder.CreatModel();
                     string modelName = Model.ModelPrefix + tableName.ToPascalCase() + Model.ModelSuffix;
-                    FileHelper.WriteAsync(System.IO.Path.Combine(path, modelName + ".cs"), b).GetAwaiter().GetResult();
+                    string pathName = Model.CodeLanguage switch
+                    {
+                        0 => System.IO.Path.Combine(path, modelName + ".cs"),
+                        1 => System.IO.Path.Combine(path, modelName + ".java"),
+                        _ => System.IO.Path.Combine(path, modelName + ".cs")
+                    };
+                    FileHelper.WriteAsync(pathName, b).GetAwaiter().GetResult();
                 }
 
                 MessageBox.Show("生成成功！");

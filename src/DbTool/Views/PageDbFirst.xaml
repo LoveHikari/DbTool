@@ -6,12 +6,16 @@
       xmlns:local="clr-namespace:DbTool.Views"
       xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:viewModels="clr-namespace:DbTool.ViewModels"
+      xmlns:converters="clr-namespace:DbTool.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PageDbFirst">
     <Page.DataContext>
         <viewModels:PageDbFirstViewModel/>
     </Page.DataContext>
+    <Page.Resources>
+        <converters:Radio2BoolConverter x:Key="Radio2BoolConverter"></converters:Radio2BoolConverter>
+    </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="21*"/>
@@ -50,6 +54,14 @@
                                 <DataGridTextColumn Header="说明" Width="80" Binding="{Binding Description}"/>
                             </DataGrid.Columns>
                         </DataGrid>
+                        <GroupBox Header="语言" Margin="5,5,5,0">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <RadioButton GroupName="CodeLanguage" IsChecked="{Binding Model.CodeLanguage,Mode=TwoWay,Converter={StaticResource Radio2BoolConverter},ConverterParameter=0}">.net efcore</RadioButton>
+                                    <RadioButton GroupName="CodeLanguage" IsChecked="{Binding Model.CodeLanguage,Mode=TwoWay,Converter={StaticResource Radio2BoolConverter},ConverterParameter=1}">java jpa</RadioButton>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
                         <GroupBox Header="参数" Margin="5,5,5,0">
                             <Grid>
                                 <StackPanel Orientation="Horizontal">

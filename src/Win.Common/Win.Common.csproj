@@ -20,6 +20,8 @@
 
   <ItemGroup>
     <Compile Include="Builder\BuilderModel.cs" />
+    <Compile Include="Builder\BuilderModelJavaJpa.cs" />
+    <Compile Include="Builder\BuilderModelEfCore.cs" />
   </ItemGroup>
 
   <ItemGroup>

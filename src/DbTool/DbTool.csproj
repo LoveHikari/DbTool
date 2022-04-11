@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net7.0-windows</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
 		<ApplicationIcon>DbTool.ico</ApplicationIcon>
@@ -11,6 +12,7 @@
 	<ItemGroup>
 		<Folder Include="ViewModels\" />
 		<Folder Include="Models\" />
+		<Folder Include="Converters\" />
 	</ItemGroup>
 
 	<ItemGroup>

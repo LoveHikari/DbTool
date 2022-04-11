@@ -49,7 +49,13 @@ namespace DbTool.Models
             get => _codeContent;
             set { _codeContent = value; NotifyPropertyChanged(); }
         }
+        private int _codeLanguage;  // 编程语言
 
+        public int CodeLanguage
+        {
+            get => _codeLanguage;
+            set { _codeLanguage = value; NotifyPropertyChanged(); }
+        }
         private string _modelPath;  // 命名空间
 
         public string ModelPath
