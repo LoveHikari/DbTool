@@ -5,31 +5,32 @@ namespace Win.Common
 {
     public static class StringExtensions
     {
-        //public static string ToPascalCase(this string value)
-        //{
-        //    if (string.IsNullOrEmpty(value))
-        //        return value;
-
-        //    if (value.IndexOf('_') >= 0)
-        //    {
-        //        var parts = value.Split('_');
-        //        var sb = new StringBuilder();
-        //        foreach (var part in parts)
-        //        {
-        //            if (string.IsNullOrEmpty(part))
-        //                continue;
-        //            var str = part.ToCamelCase();
-        //            sb.Append(char.ToUpper(str[0]) + str.Substring(1, str.Length - 1));
-        //        }
-
-        //        return sb.ToString();
-        //    }
-
-        //    var camelCase = value.ToCamelCase();
-        //    return char.ToUpper(camelCase[0]) + camelCase.Substring(1, camelCase.Length - 1);
-        //}
-
         public static string ToCamelCase(this string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return value;
+
+            if (value.IndexOf('_') >= 0)
+            {
+                var parts = value.Split('_');
+                var sb = new StringBuilder();
+                foreach (var part in parts)
+                {
+                    if (string.IsNullOrEmpty(part))
+                        continue;
+                    var str = CamelCase(part);
+                    sb.Append(char.ToUpper(str[0]) + str.Substring(1, str.Length - 1));
+                }
+
+                string s = sb.ToString();
+                return char.ToLower(s[0]) + s.Substring(1, s.Length - 1);
+            }
+
+            var camelCase = CamelCase(value);
+            return camelCase;
+        }
+
+        private static string CamelCase(string value)
         {
             int LowerCaseOffset = 'a' - 'A';
             if (string.IsNullOrEmpty(value))

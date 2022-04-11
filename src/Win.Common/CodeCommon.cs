@@ -79,5 +79,24 @@ namespace Win.Common
         {
             throw new NotImplementedException();
         }
+        /// <summary>
+        /// 将SQLServer数据类型（如：varchar）转换为.Net类型（如：String）
+        /// </summary>
+        /// <param name="sqlTypeString">SQLServer数据类型</param>
+        /// <returns></returns>
+        public static string DbTypeToJava(string sqlTypeString)
+        {
+            string[] SqlTypeNames = new string[] { "int", "varchar","bit" ,"datetime","decimal","float","image","money",
+                "ntext","nvarchar","smalldatetime","smallint","text","bigint","binary","char","nchar","numeric",
+                "real","smallmoney", "sql_variant","timestamp","tinyint","uniqueidentifier","varbinary", "date"};
+
+            string[] DotNetTypes = new string[] {"Integer", "String","boolean" ,"Date","Decimal","Double","Byte[]","Single",
+                "String","String","DateTime","Int16","String","Long","Byte[]","String","String","Decimal",
+                "Single","Single", "Object","Byte[]","Byte","Guid","Byte[]", "Date"};
+
+            int i = Array.IndexOf(SqlTypeNames, sqlTypeString.ToLower());
+
+            return DotNetTypes[i];
+        }
     }
 }

@@ -26,6 +26,7 @@ namespace Win.Common.Builder
             strclass.AppendLine("import org.springframework.context.annotation.Description;");
             strclass.AppendLine("import javax.persistence.*;");
             strclass.AppendLine("import java.io.Serializable;");
+            strclass.AppendLine("import java.util.Date;");
             strclass.AppendLine("");
             strclass.AppendSpaceLine(0, "/**");
             if (_fieldlist[0].TableDescription.Length > 0)
@@ -62,7 +63,7 @@ namespace Win.Common.Builder
 
             foreach (ColumnModel field in _fieldlist)
             {
-                string columnType = Win.Common.CodeCommon.DbTypeToCS(field.TypeName);
+                string columnType = Win.Common.CodeCommon.DbTypeToJava(field.TypeName);
                 string isnull = "";
                 if (field.IsCanNull)
                 {
@@ -86,13 +87,17 @@ namespace Win.Common.Builder
                 {
                     s += ", nullable = false";
                 }
+                else
+                {
+                    s += ", nullable = true";
+                }
                 if (!string.IsNullOrWhiteSpace(field.Description))
                 {
                     s += $", columnDefinition=\"{field.Description}\"";
                 }
                 strclass2.AppendSpaceLine(4, $"@Column({s})");
 
-                strclass2.AppendSpaceLine(4, $"private {columnType + isnull} {field.ColumnName.ToPascalCase()};  // {field.Description}");
+                strclass2.AppendSpaceLine(4, $"private {columnType} {field.ColumnName.ToCamelCase()};  // {field.Description}");
             }
             strclass.Append(strclass2);
             //strclass.AppendSpaceLine(4, "#endregion Model");
