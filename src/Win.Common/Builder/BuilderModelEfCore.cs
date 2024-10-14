@@ -119,8 +119,6 @@ namespace Win.Common.Builder
         public override string CreatApplicationInterface()
         {
             StringBuilder strclass = new StringBuilder();
-            strclass.AppendLine($"using {_modelPath};");
-            strclass.AppendLine("");
             strclass.AppendLine($"namespace {_applicationPath}.Interfaces;");
             strclass.AppendLine("");
             strclass.AppendSpaceLine(0, "/// <summary>");
@@ -133,7 +131,7 @@ namespace Win.Common.Builder
                 strclass.AppendSpaceLine(0, "/// " + _fieldList[0].TableName + ":业务接口");
             }
             strclass.AppendSpaceLine(0, "/// </summary>");
-            strclass.AppendSpaceLine(0, $"public interface I{_applicationName} : IBaseService<{_modelName}>");
+            strclass.AppendSpaceLine(0, $"public interface I{_applicationName} : IBaseService");
             strclass.AppendSpaceLine(0, "{");
             strclass.AppendLine("");
             strclass.AppendSpaceLine(0, "}");
@@ -148,8 +146,8 @@ namespace Win.Common.Builder
         public override string CreatApplication()
         {
             StringBuilder strclass = new StringBuilder();
-            strclass.AppendLine($"using {_modelPath};");
             strclass.AppendLine($"using {_applicationPath}.Interfaces;");
+            strclass.AppendLine($"using {_modelPath}.Repository.Interfaces;");
             strclass.AppendLine("");
             strclass.AppendLine("namespace " + _applicationPath + ";");
             strclass.AppendLine("");
@@ -163,7 +161,7 @@ namespace Win.Common.Builder
                 strclass.AppendSpaceLine(0, "/// " + _fieldList[0].TableName + ":业务类");
             }
             strclass.AppendSpaceLine(0, "/// </summary>");
-            strclass.AppendSpaceLine(0, $"public class {_applicationName} : BaseService<{_modelName}>, I{_applicationName}");
+            strclass.AppendSpaceLine(0, $"public class {_applicationName} : BaseService, I{_applicationName}");
             strclass.AppendSpaceLine(0, "{");
             strclass.AppendSpaceLine(4, $"public {_applicationName}()");
             strclass.AppendSpaceLine(4, "{");

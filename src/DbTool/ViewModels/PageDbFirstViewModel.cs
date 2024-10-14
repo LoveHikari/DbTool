@@ -26,8 +26,8 @@ namespace DbTool.ViewModels
             Model.ModelPrefix = "M";
             Model.RepositoryPath = "Repository";
             Model.RepositorySuffix = "Repository";
-            Model.ApplicationPath = "Application";
-            Model.ApplicationSuffix = "Application";
+            Model.ApplicationPath = "Service";
+            Model.ApplicationSuffix = "Service";
 
             Model.CurrentConfig = "Model";
 
