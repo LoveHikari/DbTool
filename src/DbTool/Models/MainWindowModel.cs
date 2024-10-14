@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using Hikari.WPF.MVVM;
+﻿using Hikari.Mvvm;
 
 namespace DbTool.Models
 {

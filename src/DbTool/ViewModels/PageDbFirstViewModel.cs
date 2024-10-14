@@ -1,15 +1,11 @@
 ﻿using DbTool.Models;
 using Hikari.Common;
 using Hikari.Common.IO;
-using Hikari.WPF.MVVM;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Threading;
 using System.Windows;
 using System.Windows.Input;
-using Win.Common;
+using Hikari.Mvvm.Command;
 using Win.Common.Builder;
 using Win.DAL.BLL;
 using Win.Models;
@@ -28,6 +24,13 @@ namespace DbTool.ViewModels
             Model.ConnectionString = "Persist Security Info=False;User ID=sa;Password=Atkj89715326;Initial Catalog=ANTOINE_DATABASE;Server=192.168.1.140";
             Model.ModelPath = "Models";
             Model.ModelPrefix = "M";
+            Model.RepositoryPath = "Repository";
+            Model.RepositorySuffix = "Repository";
+            Model.ApplicationPath = "Application";
+            Model.ApplicationSuffix = "Application";
+
+            Model.CurrentConfig = "Model";
+
             Model.ProviderNameList = new List<string>()
             {
                 "Sql Server", "MySql"
@@ -73,12 +76,17 @@ namespace DbTool.ViewModels
             // var builder = new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix);
             BuilderModel builder = Model.CodeLanguage switch
             {
-                0 => new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix),
-                1 => new BuilderModelJavaJpa(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix),
-                _ => new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix)
+                0 => new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix),
+                1 => new BuilderModelJavaJpa(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix),
+                _ => new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix)
             };
-            var b = builder.CreatModel();
-            Model.CodeContent = b;
+            Model.CodeContent = Model.CurrentConfig switch
+            {
+                "Model" => builder.CreatModel(),
+                "Repository" => builder.CreatRepository(),
+                "Application" => builder.CreatApplication(),
+                _ => builder.CreatModel()
+            };
         });
         /// <summary>
         /// 生成全部代码命令
@@ -98,9 +106,9 @@ namespace DbTool.ViewModels
                     //var builder = new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix);
                     BuilderModel builder = Model.CodeLanguage switch
                     {
-                        0 => new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix),
-                        1 => new BuilderModelJavaJpa(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix),
-                        _ => new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix)
+                        0 => new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix),
+                        1 => new BuilderModelJavaJpa(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix),
+                        _ => new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix)
                     };
                     var b = builder.CreatModel();
                     string modelName = Model.ModelPrefix + tableName.ToPascalCase() + Model.ModelSuffix;

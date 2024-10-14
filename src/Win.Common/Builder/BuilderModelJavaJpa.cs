@@ -10,8 +10,14 @@ namespace Win.Common.Builder
     /// </summary>
     public class BuilderModelJavaJpa : BuilderModel
     {
-        public BuilderModelJavaJpa(List<ColumnModel> fieldList, string modelPath, string modelPrefix, string modelSuffix) : base(fieldList, modelPath, modelPrefix, modelSuffix)
+        public BuilderModelJavaJpa(List<ColumnModel> fieldList, string modelPath, string modelPrefix,
+            string modelSuffix,
+            string repositoryPath, string repositoryPrefix, string repositorySuffix,
+            string applicationPath, string applicationPrefix, string applicationSuffix) : base(fieldList, modelPath,
+            modelPrefix, modelSuffix, repositoryPath, repositoryPrefix, repositorySuffix, applicationPath, 
+            applicationPrefix, applicationSuffix)
         {
+
         }
         /// <summary>
         /// 生成完整Model类
@@ -19,7 +25,7 @@ namespace Win.Common.Builder
         public override string CreatModel()
         {
             StringBuilder strclass = new StringBuilder();
-            strclass.AppendLine("package " + _modelpath + ";");
+            strclass.AppendLine("package " + _modelPath + ";");
             strclass.AppendLine("");
             strclass.AppendLine("import lombok.Data;");
             strclass.AppendLine("import lombok.experimental.Accessors;");
@@ -29,26 +35,46 @@ namespace Win.Common.Builder
             strclass.AppendLine("import java.util.Date;");
             strclass.AppendLine("");
             strclass.AppendSpaceLine(0, "/**");
-            if (_fieldlist[0].TableDescription.Length > 0)
+            if (_fieldList[0].TableDescription.Length > 0)
             {
-                strclass.AppendSpaceLine(0, " * " + _fieldlist[0].TableDescription.Replace("\r\n", "\r\n\t///"));
+                strclass.AppendSpaceLine(0, " * " + _fieldList[0].TableDescription.Replace("\r\n", "\r\n\t///"));
             }
             else
             {
-                strclass.AppendSpaceLine(0, " * " + _fieldlist[0].TableName + ":实体类(属性说明自动提取数据库字段的描述信息)");
+                strclass.AppendSpaceLine(0, " * " + _fieldList[0].TableName + ":实体类(属性说明自动提取数据库字段的描述信息)");
             }
             strclass.AppendSpaceLine(0, " */");
             strclass.AppendSpaceLine(0, "@Data");
             strclass.AppendSpaceLine(0, "@Accessors(chain = true)");
             strclass.AppendSpaceLine(0, "@Entity");
-            strclass.AppendSpaceLine(0, $"@Table(name = \"{_fieldlist[0].TableName}\")");
-            strclass.AppendSpaceLine(0, $"@org.hibernate.annotations.Table(appliesTo = \"{_fieldlist[0].TableName}\", comment = \"{_fieldlist[0].TableDescription}\")");
+            strclass.AppendSpaceLine(0, $"@Table(name = \"{_fieldList[0].TableName}\")");
+            strclass.AppendSpaceLine(0, $"@org.hibernate.annotations.Table(appliesTo = \"{_fieldList[0].TableName}\", comment = \"{_fieldList[0].TableDescription}\")");
             strclass.AppendSpaceLine(0, $"public class {_modelName} implements Serializable " + "{");
             strclass.AppendLine(CreatModelMethod());
             strclass.AppendSpaceLine(0, "}");
             strclass.AppendLine("");
 
             return strclass.ToString();
+        }
+
+        public override string CreatRepositoryInterface()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override string CreatRepository()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override string CreatApplicationInterface()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override string CreatApplication()
+        {
+            throw new System.NotImplementedException();
         }
 
 
@@ -61,7 +87,7 @@ namespace Win.Common.Builder
             StringBuilder strclass = new StringBuilder();
             StringBuilder strclass2 = new StringBuilder();
 
-            foreach (ColumnModel field in _fieldlist)
+            foreach (ColumnModel field in _fieldList)
             {
                 string columnType = Win.Common.CodeCommon.DbTypeToJava(field.TypeName);
                 string isnull = "";

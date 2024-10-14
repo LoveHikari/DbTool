@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Hikari.Common" Version="6.0.3.5" />
+	  <PackageReference Include="Hikari.Common" Version="8.0.8" />
   </ItemGroup>
 
 </Project>

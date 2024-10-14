@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net7.0-windows</TargetFramework>
+		<TargetFramework>net9.0-windows</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
@@ -12,12 +12,11 @@
 	<ItemGroup>
 		<Folder Include="ViewModels\" />
 		<Folder Include="Models\" />
-		<Folder Include="Converters\" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Hikari.WPF" Version="6.0.0-preview.3.1.0" />
-		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+		<PackageReference Include="Hikari.Mvvm" Version="1.0.1" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
 		<PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
 	</ItemGroup>
 

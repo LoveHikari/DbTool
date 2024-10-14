@@ -11,9 +11,13 @@ namespace Win.Common.Builder
     public abstract class BuilderModel
     {
         #region 字段
-        protected string _modelpath;  //实体类的命名空间
-        protected List<ColumnModel> _fieldlist;  //选择的字段集合
+        protected List<ColumnModel> _fieldList;  //选择的字段集合
+        protected string _modelPath;  //实体类的命名空间
         protected string _modelName;  //实体类名
+        protected string _repositoryPath;  //仓储类的命名空间
+        protected string _repositoryName;  //仓储类名
+        protected string _applicationPath;  //业务类的命名空间
+        protected string _applicationName;  //业务类名
         #endregion
 
         /// <summary>
@@ -23,13 +27,27 @@ namespace Win.Common.Builder
         /// <param name="modelPath">实体类的命名空间</param>
         /// <param name="modelPrefix">实体类的前缀</param>
         /// <param name="modelSuffix">实体类的后缀</param>
-        public BuilderModel(List<ColumnModel> fieldList, string modelPath, string modelPrefix, string modelSuffix)
+        /// <param name="repositoryPath">仓储类的命名空间</param>
+        /// <param name="repositoryPrefix">仓储类的前缀</param>
+        /// <param name="repositorySuffix">仓储类的后缀</param>
+        /// <param name="applicationPath">业务类的命名空间</param>
+        /// <param name="applicationPrefix">业务类的前缀</param>
+        /// <param name="applicationSuffix">业务类的后缀</param>
+        protected BuilderModel(List<ColumnModel> fieldList, string modelPath, string modelPrefix, string modelSuffix, 
+            string repositoryPath, string repositoryPrefix, string repositorySuffix,
+            string applicationPath, string applicationPrefix, string applicationSuffix)
         {
             
-            _fieldlist = fieldList;
-            _modelpath = modelPath;
-            string tableName = _fieldlist[0].TableName;
+            _fieldList = fieldList;
+            _modelPath = modelPath;
+            string tableName = _fieldList[0].TableName;
             _modelName = modelPrefix + tableName.ToPascalCase() + modelSuffix;
+
+            _repositoryPath = repositoryPath;
+            _repositoryName = repositoryPrefix + tableName.ToPascalCase() + repositorySuffix;
+
+            _applicationPath = applicationPath;
+            _applicationName = applicationPrefix + tableName.ToPascalCase() + applicationSuffix;
         }
 
 
@@ -37,10 +55,29 @@ namespace Win.Common.Builder
         /// 生成完整Model类
         /// </summary>
         public abstract string CreatModel();
+        /// <summary>
+        /// 生成仓储接口
+        /// </summary>
+        /// <returns></returns>
+        public abstract string CreatRepositoryInterface();
 
+        /// <summary>
+        /// 生成仓储类
+        /// </summary>
+        /// <returns></returns>
+        public abstract string CreatRepository();
 
+        /// <summary>
+        /// 生成业务接口
+        /// </summary>
+        /// <returns></returns>
+        public abstract string CreatApplicationInterface();
 
-
+        /// <summary>
+        /// 生成业务类
+        /// </summary>
+        /// <returns></returns>
+        public abstract string CreatApplication();
 
     }
 }

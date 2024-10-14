@@ -7,7 +7,7 @@
         xmlns:viewModels="clr-namespace:DbTool.ViewModels" xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:views="clr-namespace:DbTool.Views"
         mc:Ignorable="d"
-        Title="DbTool" Height="500" Width="800" ResizeMode="CanMinimize">
+        Title="DbTool" Height="700" Width="800" ResizeMode="CanMinimize">
     <Window.DataContext>
         <viewModels:MainWindowViewModel/>
     </Window.DataContext>
