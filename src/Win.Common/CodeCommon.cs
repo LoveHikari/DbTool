@@ -68,7 +68,7 @@ namespace Win.Common
 
             string[] DotNetTypes = new string[] {"int", "string","bool" ,"DateTime","Decimal","Double","Double","Byte[]","Single",
                 "string","string","DateTime","Int16","string","Int64","Byte[]","string","string","Decimal",
-                "Single","Single", "Object","Byte[]","Byte","Guid","Byte[]", "DateOnly"};
+                "Single","Single", "Object","Byte[]","sbyte","Guid","Byte[]", "DateOnly"};
 
             int i = Array.IndexOf(SqlTypeNames, sqlTypeString.ToLower());
             

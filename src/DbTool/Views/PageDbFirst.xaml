@@ -9,8 +9,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:DbTool.ViewModels"
     Title="PageDbFirst"
-    d:DesignHeight="550"
-    d:DesignWidth="800"
+    d:DesignHeight="670"
+    d:DesignWidth="900"
     mc:Ignorable="d">
     <Page.DataContext>
         <viewModels:PageDbFirstViewModel />
@@ -25,7 +25,7 @@
             <ColumnDefinition Width="139*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="5*" />
+            <RowDefinition Height="2*" />
             <RowDefinition Height="24*" />
         </Grid.RowDefinitions>
         <StackPanel
@@ -58,7 +58,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 ItemsSource="{Binding Model.ProviderNameList}"
-                SelectedIndex="0" />
+                SelectedValue="{Binding Model.ProviderName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             <Button
                 Margin="5,0,5,0"
                 HorizontalAlignment="Left"
@@ -133,7 +133,7 @@
                                     Header="说明" />
                             </DataGrid.Columns>
                         </DataGrid>
-                        <GroupBox Margin="5,5,5,0" Header="语言">
+                        <GroupBox Margin="5,5,5,0" Header="语言" HorizontalContentAlignment="Left">
                             <Grid>
                                 <StackPanel Orientation="Horizontal">
                                     <RadioButton GroupName="CodeLanguage" IsChecked="{Binding Model.CodeLanguage, Mode=TwoWay, Converter={StaticResource Radio2BoolConverter}, ConverterParameter=0}">.net efcore</RadioButton>
@@ -141,7 +141,7 @@
                                 </StackPanel>
                             </Grid>
                         </GroupBox>
-                        <GroupBox Margin="5,5,5,0">
+                        <GroupBox Margin="5,5,5,0" HorizontalContentAlignment="Left">
                             <GroupBox.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <RadioButton
@@ -170,7 +170,7 @@
                                 </StackPanel>
                             </Grid>
                         </GroupBox>
-                        <GroupBox Margin="5,5,5,0">
+                        <GroupBox Margin="5,5,5,0" HorizontalContentAlignment="Left">
                             <GroupBox.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <RadioButton
@@ -199,7 +199,7 @@
                                 </StackPanel>
                             </Grid>
                         </GroupBox>
-                        <GroupBox Margin="5,5,5,0">
+                        <GroupBox Margin="5,5,5,0" HorizontalContentAlignment="Left">
                             <GroupBox.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <RadioButton
@@ -228,7 +228,7 @@
                                 </StackPanel>
                             </Grid>
                         </GroupBox>
-                        <GroupBox Margin="5,5,5,0" Header="操作">
+                        <GroupBox Margin="5,5,5,0" Header="操作" HorizontalContentAlignment="Left">
                             <Grid>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
@@ -241,12 +241,12 @@
                                         ItemsSource="{Binding Model.PrimaryKeyList}"
                                         SelectedIndex="0" />
                                     <Button
-                                        Width="60"
+                                        Width="70"
                                         Margin="5,0"
                                         Command="{Binding GenerateCodeCommand}"
                                         Content="生成代码" />
                                     <Button
-                                        Width="60"
+                                        Width="70"
                                         Margin="5,0"
                                         Command="{Binding GenerateAllCodeCommand}"
                                         Content="全部生成" />

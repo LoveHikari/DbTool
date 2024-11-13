@@ -19,6 +19,13 @@ namespace DbTool.Models
             get => _providerNameList;
             set { _providerNameList = value; NotifyPropertyChanged(); }
         }
+        private string _providerName;  // 数据库类型
+
+        public string ProviderName
+        {
+            get => _providerName;
+            set { _providerName = value; NotifyPropertyChanged(); }
+        }
 
         private DataView _tableList;   // 表列表
 

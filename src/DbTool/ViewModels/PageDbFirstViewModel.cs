@@ -21,7 +21,7 @@ namespace DbTool.ViewModels
         public PageDbFirstViewModel()
         {
             Model = new PageDbFirstModel();
-            Model.ConnectionString = "Persist Security Info=False;User ID=sa;Password=Atkj89715326;Initial Catalog=ANTOINE_DATABASE;Server=192.168.1.140";
+            Model.ConnectionString = App.DbSet.DefaultConnString;
             Model.ModelPath = "Models";
             Model.ModelPrefix = "M";
             Model.RepositoryPath = "Repository";
@@ -35,6 +35,7 @@ namespace DbTool.ViewModels
             {
                 "Sql Server", "MySql"
             };
+            Model.ProviderName = App.DbSet.DefaultDbType;
             Model.CodeLanguage = 0;
         }
         /// <summary>

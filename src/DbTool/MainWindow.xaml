@@ -7,7 +7,7 @@
         xmlns:viewModels="clr-namespace:DbTool.ViewModels" xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:views="clr-namespace:DbTool.Views"
         mc:Ignorable="d"
-        Title="DbTool" Height="700" Width="800" ResizeMode="CanMinimize">
+        Title="DbTool" Height="730" Width="900" ResizeMode="CanMinimize">
     <Window.DataContext>
         <viewModels:MainWindowViewModel/>
     </Window.DataContext>
@@ -25,7 +25,7 @@
             </TabItem>
             <TabItem Header="设置">
                 <Grid Background="#FFE5E5E5">
-                    <!--<Frame Source="Views/PageDbFirst.xaml" />-->
+                    <Frame Source="Views/PageSettings.xaml" />
                 </Grid>
             </TabItem>
         </TabControl>

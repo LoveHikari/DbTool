@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Hikari.Common" Version="8.0.8" />
+	  <PackageReference Include="Hikari.Common" Version="8.0.10" />
   </ItemGroup>
 
 </Project>
