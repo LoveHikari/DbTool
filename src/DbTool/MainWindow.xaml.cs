@@ -23,6 +23,23 @@ namespace DbTool
         public MainWindow()
         {
             InitializeComponent();
+
+            // 获取屏幕高度
+            double screenHeight = SystemParameters.WorkArea.Height;
+            double screenWidth = SystemParameters.WorkArea.Width;
+            this.MaxHeight = screenHeight; // 限制最大高度
+            this.MaxWidth = screenWidth;  // 限制最大宽度
+            // 如果窗口高度超过屏幕高度，则调整为屏幕高度
+            if (this.Height > screenHeight)
+            {
+                this.Height = screenHeight;
+            }
+            // 如果窗口宽度超过屏幕宽度，则调整为屏幕宽度
+            if (this.Width > screenWidth)
+            {
+                this.Width = screenWidth;
+            }
+
         }
     }
 }
