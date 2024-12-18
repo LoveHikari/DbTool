@@ -1,13 +1,14 @@
 ﻿using DbTool.Bean;
 using Hikari.Mvvm;
+using Win.Common.Config.Model;
 
 namespace DbTool.Models;
 
 public class PageSettingsModel : NotificationObject
 {
-    private DbSet _dbSet;
+    private ConfigParm _dbSet;
 
-    public DbSet DbSet
+    public ConfigParm DbSet
     {
         get => _dbSet;
         set { _dbSet = value; NotifyPropertyChanged(); }

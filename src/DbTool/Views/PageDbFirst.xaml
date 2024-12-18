@@ -16,8 +16,8 @@
         <viewModels:PageDbFirstViewModel />
     </Page.DataContext>
     <Page.Resources>
-        <converters:Radio2BoolConverter x:Key="Radio2BoolConverter" />
         <converters:StringToBooleanConverter x:Key="StringToBooleanConverter" />
+
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -133,11 +133,14 @@
                                     Header="说明" />
                             </DataGrid.Columns>
                         </DataGrid>
-                        <GroupBox Margin="5,5,5,0" Header="语言" HorizontalContentAlignment="Left">
+                        <GroupBox
+                            Margin="5,5,5,0"
+                            HorizontalContentAlignment="Left"
+                            Header="语言">
                             <Grid>
                                 <StackPanel Orientation="Horizontal">
-                                    <RadioButton GroupName="CodeLanguage" IsChecked="{Binding Model.CodeLanguage, Mode=TwoWay, Converter={StaticResource Radio2BoolConverter}, ConverterParameter=0}">.net efcore</RadioButton>
-                                    <RadioButton GroupName="CodeLanguage" IsChecked="{Binding Model.CodeLanguage, Mode=TwoWay, Converter={StaticResource Radio2BoolConverter}, ConverterParameter=1}">java jpa</RadioButton>
+                                    <RadioButton GroupName="CodeLanguage" IsChecked="{Binding Model.CodeLanguage, Mode=TwoWay, Converter={StaticResource StringToBooleanConverter}, ConverterParameter=0}">.net efcore</RadioButton>
+                                    <RadioButton GroupName="CodeLanguage" IsChecked="{Binding Model.CodeLanguage, Mode=TwoWay, Converter={StaticResource StringToBooleanConverter}, ConverterParameter=1}">java jpa</RadioButton>
                                 </StackPanel>
                             </Grid>
                         </GroupBox>
@@ -228,7 +231,10 @@
                                 </StackPanel>
                             </Grid>
                         </GroupBox>
-                        <GroupBox Margin="5,5,5,0" Header="操作" HorizontalContentAlignment="Left">
+                        <GroupBox
+                            Margin="5,5,5,0"
+                            HorizontalContentAlignment="Left"
+                            Header="操作">
                             <Grid>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
@@ -271,15 +277,25 @@
                 <Button Content="连接" Command="{Binding ConnectCommand}"></Button>
             </ToolBar>-->
 
-            <ListView x:Name="listView1" ItemsSource="{Binding Model.TableList}">
+            <ListView ItemsSource="{Binding Model.TableList}">
+                <d:ListView.ItemsSource>
+                    <x:Array
+                        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                        Type="{x:Type sys:String}">
+                        <sys:String>1</sys:String>
+                        <sys:String>2</sys:String>
+                        <sys:String>3</sys:String>
+                        <sys:String>4</sys:String>
+                    </x:Array>
+                </d:ListView.ItemsSource>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=TableName}" Header="表名" />
+                        <GridViewColumn d:DisplayMemberBinding="{Binding}"  DisplayMemberBinding="{Binding Path=TableName}" Header="表名" />
                     </GridView>
                 </ListView.View>
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="SelectionChanged">
-                        <b:InvokeCommandAction Command="{Binding SelectionChangedCommand}" CommandParameter="{Binding ElementName=listView1, Path=SelectedItems}" />
+                        <b:InvokeCommandAction Command="{Binding SelectionChangedCommand}" CommandParameter="{Binding Path=SelectedItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
             </ListView>

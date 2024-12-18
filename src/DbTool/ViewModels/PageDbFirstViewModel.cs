@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using Hikari.Mvvm.Command;
 using Win.Common.Builder;
+using Win.Common.Config;
 using Win.DAL.BLL;
 using Win.Models;
 
@@ -21,7 +22,7 @@ namespace DbTool.ViewModels
         public PageDbFirstViewModel()
         {
             Model = new PageDbFirstModel();
-            Model.ConnectionString = App.DbSet.DefaultConnString;
+            Model.ConnectionString = ConfigManager.Instance.ConfigParm.DefaultConnString;
             Model.ModelPath = "Models";
             Model.ModelPrefix = "M";
             Model.RepositoryPath = "Repository";
@@ -35,7 +36,7 @@ namespace DbTool.ViewModels
             {
                 "Sql Server", "MySql"
             };
-            Model.ProviderName = App.DbSet.DefaultDbType;
+            Model.ProviderName = ConfigManager.Instance.ConfigParm.DefaultDbType;
             Model.CodeLanguage = 0;
         }
         /// <summary>

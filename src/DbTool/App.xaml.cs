@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using DbTool.Bean;
+using HandyControl.Tools;
 using Hikari.Common.Cryptography;
 using Hikari.Common.IO;
 
@@ -18,24 +19,12 @@ namespace DbTool
     /// </summary>
     public partial class App : Application
     {
-        public static DbSet DbSet
-        {
-            get
-            {
-                string configurationPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DbTool.config");
-                var text = FileHelper.Read(configurationPath);
-                var crypto = new AESCrypto("awerfdgg");
-                var b = crypto.DecryptStr(text);
-                var dbSet = System.Text.Json.JsonSerializer.Deserialize<DbSet>(b);
-                return dbSet;
-            }
-        }
 
         public App()
         {
             Current.DispatcherUnhandledException += App_OnDispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-
+            ConfigHelper.Instance.SetLang("zh-cn");
         }
         /// <summary>
         /// UI线程抛出全局异常事件处理

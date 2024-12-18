@@ -12,6 +12,7 @@
     Width="900"
     Height="730"
     ResizeMode="CanMinimize"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Window.DataContext>
         <viewModels:MainWindowViewModel />
