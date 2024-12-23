@@ -22,9 +22,7 @@
         <TabControl>
             <TabItem Header="数据库优先">
                 <Grid Background="#FFE5E5E5">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <Frame Source="Views/PageDbFirst.xaml" />
-                    </ScrollViewer>
+                    <Frame Source="Views/PageDbFirst.xaml" />
                 </Grid>
             </TabItem>
             <TabItem Header="代码优先">

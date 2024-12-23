@@ -17,7 +17,6 @@
     </Page.DataContext>
     <Page.Resources>
         <converters:StringToBooleanConverter x:Key="StringToBooleanConverter" />
-
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -67,11 +66,46 @@
                 CommandParameter="{Binding ElementName=comboBox1, Path=SelectedValue}"
                 Content="刷新" />
         </StackPanel>
+        <DockPanel Grid.Row="1" Grid.Column="0">
+            <!--<ToolBar>
+        <Button Content="连接" Command="{Binding ConnectCommand}"></Button>
+    </ToolBar>-->
+            <ListView ItemsSource="{Binding Model.TableList}">
+                <d:ListView.ItemsSource>
+                    <x:Array xmlns:sys="clr-namespace:System;assembly=mscorlib" Type="{x:Type sys:String}">
+                        <sys:String>1</sys:String>
+                        <sys:String>2</sys:String>
+                        <sys:String>3</sys:String>
+                        <sys:String>4</sys:String>
+                    </x:Array>
+                </d:ListView.ItemsSource>
+                <ListView.ItemsPanel>
+                    <!--  使用默认的 VirtualizingStackPanel，性能更高  -->
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn
+                            d:DisplayMemberBinding="{Binding}"
+                            DisplayMemberBinding="{Binding Path=TableName}"
+                            Header="表名" />
+                    </GridView>
+                </ListView.View>
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="SelectionChanged">
+                        <b:InvokeCommandAction Command="{Binding SelectionChangedCommand}" CommandParameter="{Binding Path=SelectedItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}" />
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </ListView>
 
+        </DockPanel>
         <TabControl Grid.Row="1" Grid.Column="1">
             <TabItem Header="生成设置">
                 <Grid Background="#FFE5E5E5">
-                    <StackPanel>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Vertical">
                         <DataGrid
                             Height="200"
                             CanUserAddRows="False"
@@ -133,133 +167,136 @@
                                     Header="说明" />
                             </DataGrid.Columns>
                         </DataGrid>
-                        <GroupBox
-                            Margin="5,5,5,0"
-                            HorizontalContentAlignment="Left"
-                            Header="语言">
-                            <Grid>
-                                <StackPanel Orientation="Horizontal">
-                                    <RadioButton GroupName="CodeLanguage" IsChecked="{Binding Model.CodeLanguage, Mode=TwoWay, Converter={StaticResource StringToBooleanConverter}, ConverterParameter=0}">.net efcore</RadioButton>
-                                    <RadioButton GroupName="CodeLanguage" IsChecked="{Binding Model.CodeLanguage, Mode=TwoWay, Converter={StaticResource StringToBooleanConverter}, ConverterParameter=1}">java jpa</RadioButton>
-                                </StackPanel>
-                            </Grid>
-                        </GroupBox>
-                        <GroupBox Margin="5,5,5,0" HorizontalContentAlignment="Left">
-                            <GroupBox.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <RadioButton
-                                        Content="Model配置"
-                                        GroupName="ConfigSelection"
-                                        IsChecked="{Binding Model.CurrentConfig, Converter={StaticResource StringToBooleanConverter}, ConverterParameter=Model}" />
-                                </StackPanel>
-                            </GroupBox.Header>
-                            <Grid>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock
-                                        Margin="5,0"
-                                        VerticalAlignment="Center"
-                                        Text="命名空间" />
-                                    <TextBox Width="100" Text="{Binding Model.ModelPath, Mode=TwoWay}" />
-                                    <TextBlock
-                                        Margin="5,0"
-                                        VerticalAlignment="Center"
-                                        Text="前缀" />
-                                    <TextBox Width="100" Text="{Binding Model.ModelPrefix, Mode=TwoWay}" />
-                                    <TextBlock
-                                        Margin="5,0"
-                                        VerticalAlignment="Center"
-                                        Text="后缀" />
-                                    <TextBox Width="100" Text="{Binding Model.ModelSuffix, Mode=TwoWay}" />
-                                </StackPanel>
-                            </Grid>
-                        </GroupBox>
-                        <GroupBox Margin="5,5,5,0" HorizontalContentAlignment="Left">
-                            <GroupBox.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <RadioButton
-                                        Content="Repository配置"
-                                        GroupName="ConfigSelection"
-                                        IsChecked="{Binding Model.CurrentConfig, Converter={StaticResource StringToBooleanConverter}, ConverterParameter=Repository}" />
-                                </StackPanel>
-                            </GroupBox.Header>
-                            <Grid>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock
-                                        Margin="5,0"
-                                        VerticalAlignment="Center"
-                                        Text="命名空间" />
-                                    <TextBox Width="100" Text="{Binding Model.RepositoryPath, Mode=TwoWay}" />
-                                    <TextBlock
-                                        Margin="5,0"
-                                        VerticalAlignment="Center"
-                                        Text="前缀" />
-                                    <TextBox Width="100" Text="{Binding Model.RepositoryPrefix, Mode=TwoWay}" />
-                                    <TextBlock
-                                        Margin="5,0"
-                                        VerticalAlignment="Center"
-                                        Text="后缀" />
-                                    <TextBox Width="100" Text="{Binding Model.RepositorySuffix, Mode=TwoWay}" />
-                                </StackPanel>
-                            </Grid>
-                        </GroupBox>
-                        <GroupBox Margin="5,5,5,0" HorizontalContentAlignment="Left">
-                            <GroupBox.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <RadioButton
-                                        Content="Application配置"
-                                        GroupName="ConfigSelection"
-                                        IsChecked="{Binding Model.CurrentConfig, Converter={StaticResource StringToBooleanConverter}, ConverterParameter=Application}" />
-                                </StackPanel>
-                            </GroupBox.Header>
-                            <Grid>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock
-                                        Margin="5,0"
-                                        VerticalAlignment="Center"
-                                        Text="命名空间" />
-                                    <TextBox Width="100" Text="{Binding Model.ApplicationPath, Mode=TwoWay}" />
-                                    <TextBlock
-                                        Margin="5,0"
-                                        VerticalAlignment="Center"
-                                        Text="前缀" />
-                                    <TextBox Width="100" Text="{Binding Model.ApplicationPrefix, Mode=TwoWay}" />
-                                    <TextBlock
-                                        Margin="5,0"
-                                        VerticalAlignment="Center"
-                                        Text="后缀" />
-                                    <TextBox Width="100" Text="{Binding Model.ApplicationSuffix, Mode=TwoWay}" />
-                                </StackPanel>
-                            </Grid>
-                        </GroupBox>
-                        <GroupBox
-                            Margin="5,5,5,0"
-                            HorizontalContentAlignment="Left"
-                            Header="操作">
-                            <Grid>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock
-                                        Margin="5,0"
-                                        VerticalAlignment="Center"
-                                        Text="主键" />
-                                    <ComboBox
-                                        Width="100"
-                                        Margin="5,0"
-                                        ItemsSource="{Binding Model.PrimaryKeyList}"
-                                        SelectedIndex="0" />
-                                    <Button
-                                        Width="70"
-                                        Margin="5,0"
-                                        Command="{Binding GenerateCodeCommand}"
-                                        Content="生成代码" />
-                                    <Button
-                                        Width="70"
-                                        Margin="5,0"
-                                        Command="{Binding GenerateAllCodeCommand}"
-                                        Content="全部生成" />
-                                </StackPanel>
-                            </Grid>
-                        </GroupBox>
+                        <StackPanel>
+                            <GroupBox
+                                Margin="5,5,5,0"
+                                HorizontalContentAlignment="Left"
+                                Header="语言">
+                                <Grid>
+                                    <StackPanel Orientation="Horizontal">
+                                        <RadioButton GroupName="CodeLanguage" IsChecked="{Binding Model.CodeLanguage, Mode=TwoWay, Converter={StaticResource StringToBooleanConverter}, ConverterParameter=0}">.net efcore</RadioButton>
+                                        <RadioButton GroupName="CodeLanguage" IsChecked="{Binding Model.CodeLanguage, Mode=TwoWay, Converter={StaticResource StringToBooleanConverter}, ConverterParameter=1}">java jpa</RadioButton>
+                                    </StackPanel>
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox Margin="5,5,5,0" HorizontalContentAlignment="Left">
+                                <GroupBox.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <RadioButton
+                                            Content="Model配置"
+                                            GroupName="ConfigSelection"
+                                            IsChecked="{Binding Model.CurrentConfig, Converter={StaticResource StringToBooleanConverter}, ConverterParameter=Model}" />
+                                    </StackPanel>
+                                </GroupBox.Header>
+                                <Grid>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="5,0"
+                                            VerticalAlignment="Center"
+                                            Text="命名空间" />
+                                        <TextBox Width="100" Text="{Binding Model.ModelPath, Mode=TwoWay}" />
+                                        <TextBlock
+                                            Margin="5,0"
+                                            VerticalAlignment="Center"
+                                            Text="前缀" />
+                                        <TextBox Width="100" Text="{Binding Model.ModelPrefix, Mode=TwoWay}" />
+                                        <TextBlock
+                                            Margin="5,0"
+                                            VerticalAlignment="Center"
+                                            Text="后缀" />
+                                        <TextBox Width="100" Text="{Binding Model.ModelSuffix, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox Margin="5,5,5,0" HorizontalContentAlignment="Left">
+                                <GroupBox.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <RadioButton
+                                            Content="Repository配置"
+                                            GroupName="ConfigSelection"
+                                            IsChecked="{Binding Model.CurrentConfig, Converter={StaticResource StringToBooleanConverter}, ConverterParameter=Repository}" />
+                                    </StackPanel>
+                                </GroupBox.Header>
+                                <Grid>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="5,0"
+                                            VerticalAlignment="Center"
+                                            Text="命名空间" />
+                                        <TextBox Width="100" Text="{Binding Model.RepositoryPath, Mode=TwoWay}" />
+                                        <TextBlock
+                                            Margin="5,0"
+                                            VerticalAlignment="Center"
+                                            Text="前缀" />
+                                        <TextBox Width="100" Text="{Binding Model.RepositoryPrefix, Mode=TwoWay}" />
+                                        <TextBlock
+                                            Margin="5,0"
+                                            VerticalAlignment="Center"
+                                            Text="后缀" />
+                                        <TextBox Width="100" Text="{Binding Model.RepositorySuffix, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox Margin="5,5,5,0" HorizontalContentAlignment="Left">
+                                <GroupBox.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <RadioButton
+                                            Content="Application配置"
+                                            GroupName="ConfigSelection"
+                                            IsChecked="{Binding Model.CurrentConfig, Converter={StaticResource StringToBooleanConverter}, ConverterParameter=Application}" />
+                                    </StackPanel>
+                                </GroupBox.Header>
+                                <Grid>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="5,0"
+                                            VerticalAlignment="Center"
+                                            Text="命名空间" />
+                                        <TextBox Width="100" Text="{Binding Model.ApplicationPath, Mode=TwoWay}" />
+                                        <TextBlock
+                                            Margin="5,0"
+                                            VerticalAlignment="Center"
+                                            Text="前缀" />
+                                        <TextBox Width="100" Text="{Binding Model.ApplicationPrefix, Mode=TwoWay}" />
+                                        <TextBlock
+                                            Margin="5,0"
+                                            VerticalAlignment="Center"
+                                            Text="后缀" />
+                                        <TextBox Width="100" Text="{Binding Model.ApplicationSuffix, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox
+                                Margin="5,5,5,0"
+                                HorizontalContentAlignment="Left"
+                                Header="操作">
+                                <Grid>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="5,0"
+                                            VerticalAlignment="Center"
+                                            Text="主键" />
+                                        <ComboBox
+                                            Width="100"
+                                            Margin="5,0"
+                                            ItemsSource="{Binding Model.PrimaryKeyList}"
+                                            SelectedIndex="0" />
+                                        <Button
+                                            Width="70"
+                                            Margin="5,0"
+                                            Command="{Binding GenerateCodeCommand}"
+                                            Content="生成代码" />
+                                        <Button
+                                            Width="70"
+                                            Margin="5,0"
+                                            Command="{Binding GenerateAllCodeCommand}"
+                                            Content="全部生成" />
+                                    </StackPanel>
+                                </Grid>
+                            </GroupBox>
+                        </StackPanel>
                     </StackPanel>
+                        </ScrollViewer>
                 </Grid>
             </TabItem>
             <TabItem Header="查看代码">
@@ -272,33 +309,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <DockPanel Grid.Row="1" Grid.Column="0">
-            <!--<ToolBar>
-                <Button Content="连接" Command="{Binding ConnectCommand}"></Button>
-            </ToolBar>-->
 
-            <ListView ItemsSource="{Binding Model.TableList}">
-                <d:ListView.ItemsSource>
-                    <x:Array
-                        xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                        Type="{x:Type sys:String}">
-                        <sys:String>1</sys:String>
-                        <sys:String>2</sys:String>
-                        <sys:String>3</sys:String>
-                        <sys:String>4</sys:String>
-                    </x:Array>
-                </d:ListView.ItemsSource>
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn d:DisplayMemberBinding="{Binding}"  DisplayMemberBinding="{Binding Path=TableName}" Header="表名" />
-                    </GridView>
-                </ListView.View>
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="SelectionChanged">
-                        <b:InvokeCommandAction Command="{Binding SelectionChangedCommand}" CommandParameter="{Binding Path=SelectedItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </ListView>
-        </DockPanel>
     </Grid>
 </Page>
