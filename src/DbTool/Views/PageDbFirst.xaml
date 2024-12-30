@@ -101,7 +101,7 @@
             </ListView>
 
         </DockPanel>
-        <TabControl Grid.Row="1" Grid.Column="1">
+        <TabControl Grid.Row="1" Grid.Column="1" SelectedIndex="{Binding Model.SelectedTab}">
             <TabItem Header="生成设置">
                 <Grid Background="#FFE5E5E5">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">

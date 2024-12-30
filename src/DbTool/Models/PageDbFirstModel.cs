@@ -158,5 +158,14 @@ namespace DbTool.Models
             get => _currentConfig;
             set { _currentConfig = value; NotifyPropertyChanged(); }
         }
+        private int _selectedTab;
+        /// <summary>
+        /// 当前选择的选项卡
+        /// </summary>
+        public int SelectedTab
+        {
+            get => _selectedTab;
+            set { _selectedTab = value; NotifyPropertyChanged(); }
+        }
     }
 }

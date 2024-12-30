@@ -89,6 +89,7 @@ namespace DbTool.ViewModels
                 "Application" => builder.CreatApplication(),
                 _ => builder.CreatModel()
             };
+            Model.SelectedTab = 1;
         });
         /// <summary>
         /// 生成全部代码命令

@@ -27,7 +27,7 @@
             </TabItem>
             <TabItem Header="代码优先">
                 <Grid Background="#FFE5E5E5">
-                    <!--<Frame Source="Views/PageDbFirst.xaml" />-->
+                    <Frame Source="Views/PageCodeFirst.xaml" />
                 </Grid>
             </TabItem>
             <TabItem Header="设置">
