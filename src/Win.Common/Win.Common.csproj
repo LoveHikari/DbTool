@@ -27,7 +27,7 @@
   <ItemGroup>
     <PackageReference Include="Hikari.DbCore" Version="1.0.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
-	<PackageReference Include="Hikari.Common" Version="8.0.10" />
+	<PackageReference Include="Hikari.Common" Version="8.0.12" />
   </ItemGroup>
 
   <ItemGroup>

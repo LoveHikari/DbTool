@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DbTool/DbTool.csproj" />
+    <Project Path="src/Win.Common/Win.Common.csproj" />
+    <Project Path="src/Win.DAL/Win.DAL.csproj" />
+    <Project Path="src/Win.Models/Win.Models.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/TestProject1/TestProject1.csproj" />
+  </Folder>
+</Solution>

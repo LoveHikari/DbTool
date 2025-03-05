@@ -28,7 +28,7 @@ public class ConfigManager
                     {
                         string configurationPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DbTool.config");
                         var text = FileHelper.Read(configurationPath);
-                        var crypto = new AESCrypto("awerfdgg");
+                        var crypto = new AesCrypto("awerfdgg");
                         var b = crypto.DecryptStr(text);
                         _configParm = System.Text.Json.JsonSerializer.Deserialize<ConfigParm>(b);
                     }
@@ -40,7 +40,7 @@ public class ConfigManager
     {
         string configurationPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DbTool.config");
         var text = FileHelper.Read(configurationPath);
-        var crypto = new AESCrypto("awerfdgg");
+        var crypto = new AesCrypto("awerfdgg");
         var b = crypto.DecryptStr(text);
         var dbSet = System.Text.Json.JsonSerializer.Deserialize<ConfigParm>(b);
     }
@@ -49,7 +49,7 @@ public class ConfigManager
     {
         _configParm = cp;
         var s = System.Text.Json.JsonSerializer.Serialize(cp);
-        var crypto = new AESCrypto("awerfdgg");
+        var crypto = new AesCrypto("awerfdgg");
         var b = crypto.EncryptBase64(s);
         FileHelper.Write(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DbTool.config"), b);
     }
