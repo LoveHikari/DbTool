@@ -75,9 +75,25 @@ namespace Win.Common
             return DotNetTypes[i];
         }
 
-        public static string SqlTypeToDbType(string fieldTypeName)
+        public static string CSToDbType(string fieldTypeName)
         {
-            throw new NotImplementedException();
+            string[] SqlTypeNames = new string[]
+            {
+                "int", "varchar", "bit", "datetime", "decimal", "float", "double", "image", "money",
+                "ntext", "nvarchar", "smalldatetime", "smallint", "text", "bigint", "binary", "char", "nchar",
+                "numeric",
+                "real", "smallmoney", "sql_variant", "timestamp", "tinyint", "uniqueidentifier", "varbinary", "date"
+            };
+
+            string[] DotNetTypes = new string[]
+            {
+                "int", "string", "bool", "DateTime", "Decimal", "Double", "Double", "Byte[]", "Single",
+                "string", "string", "DateTime", "Int16", "string", "Int64", "Byte[]", "string", "string", "Decimal",
+                "Single", "Single", "Object", "Byte[]", "sbyte", "Guid", "Byte[]", "DateOnly"
+            };
+
+            int i = Array.IndexOf(DotNetTypes, fieldTypeName.ToLower());
+            return SqlTypeNames[i];
         }
         /// <summary>
         /// 将SQLServer数据类型（如：varchar）转换为.Net类型（如：String）

@@ -50,16 +50,25 @@
     </ToolBar>-->
             <TreeView ItemsSource="{Binding Model.TableStructure}">
                 <d:TreeView.ItemsSource>
-                    <x:Array xmlns:sys="clr-namespace:System;assembly=mscorlib" Type="{x:Type sys:String}">
-                        <sys:String>1</sys:String>
-                        <sys:String>2</sys:String>
-                        <sys:String>3</sys:String>
-                        <sys:String>4</sys:String>
+                    <x:Array xmlns:bean="clr-namespace:DbTool.Bean" Type="{x:Type bean:TableStructureTreeNode}">
+                        <bean:TableStructureTreeNode ColumnName="123">
+                            <bean:TableStructureTreeNode.Children>
+                                <bean:TableStructureTreeNode ColumnName="111" />
+                            </bean:TableStructureTreeNode.Children>
+                        </bean:TableStructureTreeNode>
                     </x:Array>
                 </d:TreeView.ItemsSource>
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="TreeViewItem">
+                        <Setter Property="IsExpanded" Value="True" />
+                    </Style>
+                </TreeView.ItemContainerStyle>
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                        <TextBlock Text="{Binding ColumnName}" />
+                        <TextBlock
+                            FontSize="20"
+                            Foreground="Black"
+                            Text="{Binding ColumnName}" />
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
             </TreeView>
@@ -67,10 +76,10 @@
         </DockPanel>
         <Grid
             Grid.Row="1"
-            Grid.Column="1"
+            Grid.Column="1" VerticalAlignment="Stretch"
             Background="#FFE5E5E5">
             <TextBox
-                VerticalAlignment="Stretch"
+                VerticalAlignment="Stretch" VerticalContentAlignment="Top"
                 IsReadOnly="True"
                 Text="{Binding Path=Model.SqlText}"
                 VerticalScrollBarVisibility="Auto" />

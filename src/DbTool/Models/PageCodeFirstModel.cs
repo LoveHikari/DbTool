@@ -1,10 +1,11 @@
 ﻿using Hikari.Mvvm;
 using System.Data;
+using CommunityToolkit.Mvvm.ComponentModel;
 using DbTool.Bean;
 
 namespace DbTool.Models
 {
-    public class PageCodeFirstModel : NotificationObject
+    public partial class PageCodeFirstModel : ObservableObject
     {
         private string _modelFilePath; // 模型文件路径
         /// <summary>
@@ -13,7 +14,7 @@ namespace DbTool.Models
         public string ModelFilePath
         {
             get => _modelFilePath;
-            set { _modelFilePath = value; NotifyPropertyChanged(); }
+            set { _modelFilePath = value; OnPropertyChanged(); }
         }
         
         // 是否生成数据库描述
@@ -24,19 +25,11 @@ namespace DbTool.Models
         public bool IsGenerateDbDescription
         {
             get => _isGenerateDbDescription;
-            set { _isGenerateDbDescription = value; NotifyPropertyChanged(); }
+            set { _isGenerateDbDescription = value; OnPropertyChanged(); }
         }
         // 表结构
+        [ObservableProperty]
         private List<TableStructureTreeNode> _tableStructure;
-
-        /// <summary>
-        /// 表结构
-        /// </summary>
-        public List<TableStructureTreeNode> TableStructure
-        {
-            get => _tableStructure;
-            set { _tableStructure = value; NotifyPropertyChanged(); }
-        }
         // sql文本
         private string _sqlText;
         /// <summary>
@@ -45,7 +38,7 @@ namespace DbTool.Models
         public string SqlText
         {
             get => _sqlText;
-            set { _sqlText = value; NotifyPropertyChanged(); }
+            set { _sqlText = value; OnPropertyChanged(); }
         }
     }
 }
