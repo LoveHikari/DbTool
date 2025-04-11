@@ -9,6 +9,7 @@ using System.Windows.Input;
 using Hikari.Common;
 using Win.Common;
 using Win.DAL.BLL;
+using Win.Models;
 
 namespace DbTool.ViewModels
 {
@@ -60,31 +61,29 @@ namespace DbTool.ViewModels
                 var tableName = "";
                 foreach (Match attributeMatch in attributeMatchs)
                 {
-                    var reg = Regex.Match(attributeMatch.Value, "\\[Table\\(\"(.*?)\"\\)\\]");
+                    var reg = Regex.Match(attributeMatch.Value, "\\[.*?Table\\(\"(.*?)\"\\)\\]");
                     tableName = reg.Groups[1].Value;
                     if (string.IsNullOrWhiteSpace(tableName))
                     {
                         tableName = classMatch.Groups[4].Value;
                     }
                 }
-                tableStructure.TableName = tableName;
                 tableStructure.ColumnName = tableName;
 
                 // 解析类注释
                 string classComment = ExtractComment(code, classMatch.Index);
                 if (string.IsNullOrWhiteSpace(classComment))
                 {
-                    classComment = tableStructure.TableName;
+                    classComment = tableStructure.ColumnName;
                 }
-                tableStructure.TableDescription = classComment;
                 tableStructure.Description = classComment;
 
                 // 解析类中的属性
                 string classCode = ExtractClassCode(code, classMatch.Index, classMatch.Length);
-                MatchCollection propertyMatches = Regex.Matches(classCode, @"((?:\[.*?\]\s*)*)(public|private|protected|internal)?\s*(static|readonly)?\s*(\w+)\s+(\w+)\s*{");
+                MatchCollection propertyMatches = Regex.Matches(classCode, @"((?:\[.*?\]\s*)*)(public|private|protected|internal)?\s*(static|readonly|override)?\s*([\w?]+)\s+(\w+)\s*{");
                 foreach (Match propertyMatch in propertyMatches)
                 {
-                    var node = new TableStructureTreeNode();
+                    var node = new ColumnModel();
 
                     var propertyAttributeMatchs = Regex.Matches(propertyMatch.Groups[1].Value, @"\[.*?\]");
                     string propertyType = "";
@@ -99,20 +98,28 @@ namespace DbTool.ViewModels
                         {
                             node.IsPrimaryKey = true;
                         }
-                        reg = Regex.Match(propertyAttributeMatch.Value, "Column\\(\"(.+?)\"(?:.*?TypeName.+?\"(.+?)\")?");
-
-                        typeName = reg.Groups[1].Value;
-                        if (string.IsNullOrWhiteSpace(typeName))
+                        reg = Regex.Match(propertyAttributeMatch.Value, "DatabaseGeneratedOption.Identity");
+                        if (reg.Length > 0)
                         {
-                            propertyType = propertyMatch.Groups[4].Value;
-                            typeName = CodeCommon.CSToDbType(propertyType.TrimEnd("?"));
+                            node.IsIdentity = true;
                         }
-                        propertyName = reg.Groups[2].Value;
-                        if (string.IsNullOrWhiteSpace(propertyName))
+                        reg = Regex.Match(propertyAttributeMatch.Value, "Column\\(\\s*(\"(.*?)\")?\\s*(?:.*?TypeName.+?\"(.+?)\")?");
+                        if (reg.Length > 0)
                         {
-                            propertyName = propertyMatch.Groups[5].Value;
+                            typeName = reg.Groups[3].Value;
+                            if (string.IsNullOrWhiteSpace(typeName))
+                            {
+                                propertyType = propertyMatch.Groups[4].Value;
+                                typeName = CodeCommon.CSToDbType(propertyType.TrimEnd("?"));
+                            }
+                            propertyName = reg.Groups[2].Value;
+                            if (string.IsNullOrWhiteSpace(propertyName))
+                            {
+                                propertyName = propertyMatch.Groups[5].Value;
 
+                            }
                         }
+                        
                         reg = Regex.Match(propertyAttributeMatch.Value, ".*?Required.*?");
                         if (reg.Length > 0)
                         {
@@ -168,7 +175,7 @@ namespace DbTool.ViewModels
             StringBuilder sb = new StringBuilder();
             foreach (var table in tables)
             {
-                sb.AppendLine($"create table {table.TableName}");
+                sb.AppendLine($"create table {table.ColumnName}");
                 sb.AppendLine("(");
                 foreach (var child in table.Children)
                 {
@@ -205,7 +212,7 @@ namespace DbTool.ViewModels
                 }
                 sb.Remove(sb.Length - 3, 1);
                 sb.AppendLine(")");
-                sb.AppendSpace(2, $"comment '{table.TableDescription}';");
+                sb.AppendSpace(2, $"comment '{table.Description}';");
             }
 
             return sb.ToString();

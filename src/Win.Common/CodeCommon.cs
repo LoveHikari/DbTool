@@ -82,17 +82,17 @@ namespace Win.Common
                 "int", "varchar", "bit", "datetime", "decimal", "float", "double", "image", "money",
                 "ntext", "nvarchar", "smalldatetime", "smallint", "text", "bigint", "binary", "char", "nchar",
                 "numeric",
-                "real", "smallmoney", "sql_variant", "timestamp", "tinyint", "uniqueidentifier", "varbinary", "date"
+                "real", "smallmoney", "sql_variant", "timestamp", "tinyint", "uniqueidentifier", "varbinary", "date", "bigint"
             };
 
             string[] DotNetTypes = new string[]
             {
                 "int", "string", "bool", "DateTime", "Decimal", "Double", "Double", "Byte[]", "Single",
                 "string", "string", "DateTime", "Int16", "string", "Int64", "Byte[]", "string", "string", "Decimal",
-                "Single", "Single", "Object", "Byte[]", "sbyte", "Guid", "Byte[]", "DateOnly"
+                "Single", "Single", "Object", "Byte[]", "sbyte", "Guid", "Byte[]", "DateOnly", "long"
             };
 
-            int i = Array.IndexOf(DotNetTypes, fieldTypeName.ToLower());
+            int i = Array.IndexOf(DotNetTypes, fieldTypeName);
             return SqlTypeNames[i];
         }
         /// <summary>
