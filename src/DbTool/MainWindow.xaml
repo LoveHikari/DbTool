@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:DbTool.ViewModels"
     xmlns:views="clr-namespace:DbTool.Views"
+    xmlns:langs="clr-namespace:DbTool.Properties.Langs"
     Title="DbTool"
     Width="900"
     Height="730"
@@ -20,17 +21,17 @@
     <Grid>
 
         <TabControl>
-            <TabItem Header="数据库优先">
+            <TabItem Header="{x:Static langs:Lang.DatabaseFirst}" d:Header="数据库优先">
                 <Grid Background="#FFE5E5E5">
                     <Frame Source="Views/PageDbFirst.xaml" />
                 </Grid>
             </TabItem>
-            <TabItem Header="代码优先">
+            <TabItem Header="{x:Static langs:Lang.CodeFirst}" d:Header="代码优先">
                 <Grid Background="#FFE5E5E5">
                     <Frame Source="Views/PageCodeFirst.xaml" />
                 </Grid>
             </TabItem>
-            <TabItem Header="设置">
+            <TabItem Header="{x:Static langs:Lang.Settings}" d:Header="设置">
                 <Grid Background="#FFE5E5E5">
                     <Frame Source="Views/PageSettings.xaml" />
                 </Grid>
@@ -38,4 +39,9 @@
         </TabControl>
 
     </Grid>
+        <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Closing">
+            <b:InvokeCommandAction Command="{Binding ClosingCommand}" PassEventArgsToCommand="True" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
 </Window>
