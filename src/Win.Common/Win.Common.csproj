@@ -19,9 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Builder\BuilderModel.cs" />
-    <Compile Include="Builder\BuilderModelJavaJpa.cs" />
-    <Compile Include="Builder\BuilderModelEfCore.cs" />
+    <Compile Include="Builder\BuilderContext.cs" />
+    <Compile Include="Builder\JavaJpaBuilderStragety.cs" />
+    <Compile Include="Builder\EfBuilderStragety.cs" />
+    <Compile Include="Builder\BuilderStragety.cs" />
   </ItemGroup>
 
   <ItemGroup>

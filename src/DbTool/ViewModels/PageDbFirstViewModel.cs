@@ -5,6 +5,7 @@ using System.Collections;
 using System.Data;
 using System.Windows;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 using Hikari.Mvvm.Command;
 using Win.Common.Builder;
 using Win.Common.Config;
@@ -46,7 +47,7 @@ namespace DbTool.ViewModels
         {
             get
             {
-                return new DelegateCommand<object>(delegate (object obj)
+                return new RelayCommand<object>(delegate (object? obj)
                 {
                     string providerName = (obj as string)!;
                     InitTreeView(providerName);
@@ -54,7 +55,7 @@ namespace DbTool.ViewModels
             }
         }
 
-        public ICommand SelectionChangedCommand => new DelegateCommand<object>(delegate (object obj)
+        public ICommand SelectionChangedCommand => new RelayCommand<object>(delegate (object? obj)
         {
             var items = obj as IList;
             if (items.Count != 0)
@@ -72,29 +73,30 @@ namespace DbTool.ViewModels
         /// <summary>
         /// 生成代码命令
         /// </summary>
-        public ICommand GenerateCodeCommand => new DelegateCommand<object>(delegate (object obj)
+        public ICommand GenerateCodeCommand => new RelayCommand<object>(delegate (object? obj)
         {
             List<ColumnModel> models = Model.TableFieldList.Table.ToList<ColumnModel>();
             // var builder = new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix);
-            BuilderModel builder = Model.CodeLanguage switch
+            BuilderStragety builder = Model.CodeLanguage switch
             {
-                0 => new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix),
-                1 => new BuilderModelJavaJpa(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix),
-                _ => new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix)
+                0 => new EfBuilderStragety(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix),
+                1 => new JavaJpaBuilderStragety(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix),
+                _ => new EfBuilderStragety(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix)
             };
+            BuilderContext context = new BuilderContext(builder);
             Model.CodeContent = Model.CurrentConfig switch
             {
-                "Model" => builder.CreatModel(),
-                "Repository" => builder.CreatRepository(),
-                "Application" => builder.CreatApplication(),
-                _ => builder.CreatModel()
+                "Model" => context.CreatModel(),
+                "Repository" => context.CreatRepository(),
+                "Application" => context.CreatApplication(),
+                _ => context.CreatModel()
             };
             Model.SelectedTab = 1;
         });
         /// <summary>
         /// 生成全部代码命令
         /// </summary>
-        public ICommand GenerateAllCodeCommand => new DelegateCommand<object>(delegate (object obj)
+        public ICommand GenerateAllCodeCommand => new RelayCommand<object>(delegate (object? obj)
         {
             var dialog = new System.Windows.Forms.FolderBrowserDialog();
             System.Windows.Forms.DialogResult result = dialog.ShowDialog();
@@ -107,13 +109,15 @@ namespace DbTool.ViewModels
                     var dt = _bll.GetColumnTable(tableName);
                     List<ColumnModel> models = dt.ToList<ColumnModel>();
                     //var builder = new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix);
-                    BuilderModel builder = Model.CodeLanguage switch
+                    BuilderStragety builder = Model.CodeLanguage switch
                     {
-                        0 => new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix),
-                        1 => new BuilderModelJavaJpa(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix),
-                        _ => new BuilderModelEfCore(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix)
+                        0 => new EfBuilderStragety(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix),
+                        1 => new JavaJpaBuilderStragety(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix),
+                        _ => new EfBuilderStragety(models, Model.ModelPath, Model.ModelPrefix, Model.ModelSuffix, Model.RepositoryPath, Model.RepositoryPrefix, Model.RepositorySuffix, Model.ApplicationPath, Model.ApplicationPrefix, Model.ApplicationSuffix)
                     };
-                    var b = builder.CreatModel();
+                    
+                    BuilderContext context = new BuilderContext(builder);
+                    var b = context.CreatModel();
                     string modelName = Model.ModelPrefix + tableName.ToPascalCase() + Model.ModelSuffix;
                     string pathName = Model.CodeLanguage switch
                     {

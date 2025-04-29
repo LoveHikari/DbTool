@@ -6,11 +6,11 @@ using Win.Models;
 namespace Win.Common.Builder
 {
     /// <summary>
-    /// 可系列化的Model代码生成组件
+    /// ef代码生成策略
     /// </summary>
-    public class BuilderModelEfCore : BuilderModel
+    public class EfBuilderStragety : BuilderStragety
     {
-        public BuilderModelEfCore(List<ColumnModel> fieldList, string modelPath, string modelPrefix,
+        public EfBuilderStragety(List<ColumnModel> fieldList, string modelPath, string modelPrefix,
             string modelSuffix,
             string repositoryPath, string repositoryPrefix, string repositorySuffix,
             string applicationPath, string applicationPrefix, string applicationSuffix) : base(fieldList, modelPath,
@@ -21,7 +21,7 @@ namespace Win.Common.Builder
         /// <summary>
         /// 生成完整Model类
         /// </summary>
-        public override string CreatModel()
+        internal override string CreatModel()
         {
             StringBuilder strclass = new StringBuilder();
             strclass.AppendLine("using System;");
@@ -54,7 +54,7 @@ namespace Win.Common.Builder
         /// 生成仓储接口
         /// </summary>
         /// <returns></returns>
-        public override string CreatRepositoryInterface()
+        internal override string CreatRepositoryInterface()
         {
             StringBuilder strclass = new StringBuilder();
             strclass.AppendLine($"using {_modelPath};");
@@ -83,7 +83,7 @@ namespace Win.Common.Builder
         /// 生成仓储类
         /// </summary>
         /// <returns></returns>
-        public override string CreatRepository()
+        internal override string CreatRepository()
         {
             StringBuilder strclass = new StringBuilder();
             strclass.AppendLine("using System;");
@@ -116,7 +116,7 @@ namespace Win.Common.Builder
         /// 生成业务接口
         /// </summary>
         /// <returns></returns>
-        public override string CreatApplicationInterface()
+        internal override string CreatApplicationInterface()
         {
             StringBuilder strclass = new StringBuilder();
             strclass.AppendLine($"namespace {_applicationPath}.Interfaces;");
@@ -143,7 +143,7 @@ namespace Win.Common.Builder
         /// 生成业务类
         /// </summary>
         /// <returns></returns>
-        public override string CreatApplication()
+        internal override string CreatApplication()
         {
             StringBuilder strclass = new StringBuilder();
             strclass.AppendLine($"using {_applicationPath}.Interfaces;");

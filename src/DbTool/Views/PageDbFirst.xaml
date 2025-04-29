@@ -10,7 +10,7 @@
     xmlns:viewModels="clr-namespace:DbTool.ViewModels"
     Title="PageDbFirst"
     d:DesignHeight="670"
-    d:DesignWidth="900"
+    d:DesignWidth="1300"
     mc:Ignorable="d">
     <Page.DataContext>
         <viewModels:PageDbFirstViewModel />
@@ -109,8 +109,9 @@
                         <DataGrid
                             Height="200"
                             CanUserAddRows="False"
+                            AutoGenerateColumns="False"
                             HorizontalScrollBarVisibility="Auto"
-                            IsReadOnly="True"
+                            IsReadOnly="True" d:ItemsSource="{d:SampleData ItemCount=5}"
                             ItemsSource="{Binding Model.TableFieldList}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn
@@ -175,7 +176,8 @@
                                 <Grid>
                                     <StackPanel Orientation="Horizontal">
                                         <RadioButton GroupName="CodeLanguage" IsChecked="{Binding Model.CodeLanguage, Mode=TwoWay, Converter={StaticResource StringToBooleanConverter}, ConverterParameter=0}">.net efcore</RadioButton>
-                                        <RadioButton GroupName="CodeLanguage" IsChecked="{Binding Model.CodeLanguage, Mode=TwoWay, Converter={StaticResource StringToBooleanConverter}, ConverterParameter=1}">java jpa</RadioButton>
+                                        <RadioButton Margin="10,0,0,0" GroupName="CodeLanguage" IsChecked="{Binding Model.CodeLanguage, Mode=TwoWay, Converter={StaticResource StringToBooleanConverter}, ConverterParameter=1}">java jpa</RadioButton>
+                                        <RadioButton Margin="10,0,0,0" GroupName="CodeLanguage" IsChecked="{Binding Model.CodeLanguage, Mode=TwoWay, Converter={StaticResource StringToBooleanConverter}, ConverterParameter=2}">Kotlin Exposed</RadioButton>
                                     </StackPanel>
                                 </Grid>
                             </GroupBox>

@@ -65,7 +65,7 @@ namespace DbTool
         /// <param name="e"></param>
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            MessageBox.Show(e.Exception.Message, "UI线程全局异常", MessageBoxButton.OK, MessageBoxImage.Error);
+            HandyControl.Controls.MessageBox.Show(e.Exception.Message, "UI线程全局异常", MessageBoxButton.OK, MessageBoxImage.Error);
             //LogHelper.WriteError(e.Exception, "UI线程全局异常");
             e.Handled = true;
             //throw e.Exception;
@@ -81,7 +81,7 @@ namespace DbTool
             var exception = e.ExceptionObject as Exception;
             if (exception != null)
             {
-                MessageBox.Show(exception.Message, "非UI线程全局异常", MessageBoxButton.OK, MessageBoxImage.Error);
+                HandyControl.Controls.MessageBox.Show(exception.Message, "非UI线程全局异常", MessageBoxButton.OK, MessageBoxImage.Error);
                 //LogHelper.WriteError(exception, "非UI线程全局异常");
                 //throw exception;
             }

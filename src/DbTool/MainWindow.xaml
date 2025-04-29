@@ -10,8 +10,8 @@
     xmlns:views="clr-namespace:DbTool.Views"
     xmlns:langs="clr-namespace:DbTool.Properties.Langs"
     Title="DbTool"
-    Width="900"
-    Height="730"
+    Width="1300"
+    Height="750"
     ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">

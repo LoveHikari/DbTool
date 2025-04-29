@@ -8,9 +8,9 @@ namespace Win.Common.Builder
     /// <summary>
     /// 可系列化的Model代码生成组件
     /// </summary>
-    public class BuilderModelJavaJpa : BuilderModel
+    public class JavaJpaBuilderStragety : BuilderStragety
     {
-        public BuilderModelJavaJpa(List<ColumnModel> fieldList, string modelPath, string modelPrefix,
+        public JavaJpaBuilderStragety(List<ColumnModel> fieldList, string modelPath, string modelPrefix,
             string modelSuffix,
             string repositoryPath, string repositoryPrefix, string repositorySuffix,
             string applicationPath, string applicationPrefix, string applicationSuffix) : base(fieldList, modelPath,
@@ -22,7 +22,7 @@ namespace Win.Common.Builder
         /// <summary>
         /// 生成完整Model类
         /// </summary>
-        public override string CreatModel()
+        internal override string CreatModel()
         {
             StringBuilder strclass = new StringBuilder();
             strclass.AppendLine("package " + _modelPath + ";");
@@ -57,22 +57,22 @@ namespace Win.Common.Builder
             return strclass.ToString();
         }
 
-        public override string CreatRepositoryInterface()
+        internal override string CreatRepositoryInterface()
         {
             throw new System.NotImplementedException();
         }
 
-        public override string CreatRepository()
+        internal override string CreatRepository()
         {
             throw new System.NotImplementedException();
         }
 
-        public override string CreatApplicationInterface()
+        internal override string CreatApplicationInterface()
         {
             throw new System.NotImplementedException();
         }
 
-        public override string CreatApplication()
+        internal override string CreatApplication()
         {
             throw new System.NotImplementedException();
         }
