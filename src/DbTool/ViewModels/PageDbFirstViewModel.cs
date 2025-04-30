@@ -3,6 +3,7 @@ using Hikari.Common;
 using Hikari.Common.IO;
 using System.Collections;
 using System.Data;
+using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Hikari.Mvvm.Command;
@@ -48,11 +49,13 @@ namespace DbTool.ViewModels
         {
             get
             {
-                return new RelayCommand<object>(delegate (object? obj)
+                return new AsyncRelayCommand<object>(async delegate (object? obj)
                 {
-                    
+                    LoadingService.ShowLoading();
                     string providerName = (obj as string)!;
-                    InitTreeView(providerName);
+                    await InitTreeView(providerName);
+                    
+                    LoadingService.HideLoading();
                 });
             }
         }
@@ -139,22 +142,26 @@ namespace DbTool.ViewModels
         /// <summary>
         /// 初始化树
         /// </summary>
-        private void InitTreeView(string providerName)
+        private async Task InitTreeView(string providerName)
         {
-            switch (providerName)
+            await Task.Run(() =>
             {
-                case "System.Data.SQLite":
-                    //dt = Win.DAL.BLL.SQLiteBll.GetAllTable();
-                    break;
-                case "MySql":
-                    _bll = new MySqlBll(Model.ConnectionString);
-                    break;
-                case "Sql Server":
-                default:
-                    _bll = new SqlServerBll(Model.ConnectionString);
-                    break;
-            }
-            Model.TableList = _bll.GetAllTable().DefaultView;
+                switch (providerName)
+                {
+                    case "System.Data.SQLite":
+                        //dt = Win.DAL.BLL.SQLiteBll.GetAllTable();
+                        break;
+                    case "MySql":
+                        _bll = new MySqlBll(Model.ConnectionString);
+                        break;
+                    case "Sql Server":
+                    default:
+                        _bll = new SqlServerBll(Model.ConnectionString);
+                        break;
+                }
+                Model.TableList = _bll.GetAllTable().DefaultView;
+            });
+            
         }
     }
 }

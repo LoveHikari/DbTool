@@ -8,8 +8,4 @@
   <Folder Name="/test/">
     <Project Path="test/TestProject1/TestProject1.csproj" />
   </Folder>
-  <Properties Name="ExtensibilityGlobals" Scope="PostLoad">
-    <Property Name="RESX_NeutralResourcesLanguage" Value="zh-Hans" />
-    <Property Name="RESX_PrefixTranslations" Value="False" />
-  </Properties>
 </Solution>

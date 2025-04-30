@@ -55,6 +55,7 @@ namespace DbTool
         /// <param name="e"></param>
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
+            LoadingService.HideLoading();
             var uiMessageBox = new Wpf.Ui.Controls.MessageBox
             {
                 Title = "UI线程全局异常",
@@ -76,9 +77,9 @@ namespace DbTool
         /// <param name="e"></param>
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            var exception = e.ExceptionObject as Exception;
-            if (exception != null)
+            if (e.ExceptionObject is Exception exception)
             {
+                LoadingService.HideLoading();
                 var uiMessageBox = new Wpf.Ui.Controls.MessageBox
                 {
                     Title = "非UI线程全局异常",
