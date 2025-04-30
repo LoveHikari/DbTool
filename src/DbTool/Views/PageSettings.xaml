@@ -5,10 +5,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:DbTool.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:viewModels="clr-namespace:DbTool.ViewModels"
     Title="PageSettings"
     d:DesignHeight="670"
-    d:DesignWidth="900"
+    d:DesignWidth="1300"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
     <Page.DataContext>
         <viewModels:PageSettingsViewModel />
@@ -18,7 +21,7 @@
         <StackPanel Margin="0,5,0,0">
             <StackPanel Margin="0,5,0,10" Orientation="Horizontal">
                 <TextBlock
-                    Width="120"
+                    Width="150"
                     Margin="5,0"
                     VerticalAlignment="Center"
                     Text="默认数据库连接字符串" />
@@ -29,35 +32,33 @@
             </StackPanel>
             <StackPanel Margin="0,5,0,10" Orientation="Horizontal">
                 <TextBlock
-                    Width="120"
+                    Width="150"
                     Margin="5,0"
                     VerticalAlignment="Center"
                     Text="默认数据库类型" />
                 <ComboBox
-                    Width="100"
+                    Width="150"
                     Margin="5,0,5,0"
-                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     ItemsSource="{Binding Model.DefaultDbTypeList}"
                     SelectedValue="{Binding Model.DbSet.DefaultDbType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             </StackPanel>
             <StackPanel Margin="0,5,0,10" Orientation="Horizontal">
                 <TextBlock
-                    Width="120"
+                    Width="150"
                     Margin="5,0"
                     VerticalAlignment="Center"
                     Text="默认语言" />
                 <ComboBox
-                    Width="100"
+                    Width="150"
                     Margin="5,0,5,0"
-                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     ItemsSource="{Binding Model.CultureList}"
                     SelectedValue="{Binding Model.DbSet.DefaultCulture, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             </StackPanel>
             <StackPanel Margin="0,5,0,10" Orientation="Horizontal">
                 <TextBlock
-                    Width="120"
+                    Width="150"
                     Margin="5,0"
                     VerticalAlignment="Center"
                     Text="全局引用" />
@@ -65,7 +66,7 @@
             </StackPanel>
             <StackPanel Margin="0,5,0,10" Orientation="Horizontal">
                 <TextBlock
-                    Width="120"
+                    Width="150"
                     Margin="5,0"
                     VerticalAlignment="Center"
                     Text="可空引用类型" />
@@ -73,7 +74,7 @@
             </StackPanel>
             <StackPanel Margin="0,5,0,10" Orientation="Horizontal">
                 <TextBlock
-                    Width="120"
+                    Width="150"
                     Margin="5,0"
                     VerticalAlignment="Center"
                     Text="文件范围命名空间" />

@@ -3,7 +3,6 @@ using Hikari.Common;
 using Hikari.Common.IO;
 using System.Collections;
 using System.Data;
-using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Hikari.Mvvm.Command;
@@ -11,6 +10,8 @@ using Win.Common.Builder;
 using Win.Common.Config;
 using Win.DAL.BLL;
 using Win.Models;
+using Wpf.Ui.Controls;
+using MessageBox = System.Windows.MessageBox;
 
 namespace DbTool.ViewModels
 {
@@ -49,6 +50,7 @@ namespace DbTool.ViewModels
             {
                 return new RelayCommand<object>(delegate (object? obj)
                 {
+                    
                     string providerName = (obj as string)!;
                     InitTreeView(providerName);
                 });

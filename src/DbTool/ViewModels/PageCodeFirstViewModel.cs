@@ -93,7 +93,7 @@ namespace DbTool.ViewModels
                     string propertyComment = "";
                     foreach (Match propertyAttributeMatch in propertyAttributeMatchs)
                     {
-                        var reg = Regex.Match(propertyAttributeMatch.Value, "\\[.*?Key.*?\\]");
+                        var reg = Regex.Match(propertyAttributeMatch.Value, "\\[[^a-zA-Z]*?Key.*?\\]");
                         if (reg.Length > 0)
                         {
                             node.IsPrimaryKey = true;

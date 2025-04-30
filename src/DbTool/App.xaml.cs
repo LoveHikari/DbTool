@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
+﻿using DbTool.Properties.Langs;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-using DbTool.Bean;
-using DbTool.Properties.Langs;
-using HandyControl.Tools;
-using Hikari.Common.Cryptography;
-using Hikari.Common.IO;
 using Win.Common.Config;
+using Wpf.Ui.Controls;
 
 namespace DbTool
 {
@@ -30,7 +20,7 @@ namespace DbTool
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             var lang = ConfigManager.Instance.ConfigParm.DefaultCulture ?? "zh-cn";
             LangProvider.Instance.Culture = new CultureInfo(lang);
-            ConfigHelper.Instance.SetLang(lang);
+            //ConfigHelper.Instance.SetLang(lang);
         }
         private static Mutex _mutex = null;
 
@@ -65,7 +55,15 @@ namespace DbTool
         /// <param name="e"></param>
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            HandyControl.Controls.MessageBox.Show(e.Exception.Message, "UI线程全局异常", MessageBoxButton.OK, MessageBoxImage.Error);
+            var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+            {
+                Title = "UI线程全局异常",
+                Content = e.Exception.Message,
+                //CloseButtonIcon = new SymbolIcon(SymbolRegular.Dismiss24),
+
+            };
+            uiMessageBox.ShowDialogAsync();
+            //System.Windows.MessageBox.Show(e.Exception.Message, "UI线程全局异常", System.Windows.MessageBoxButton.OK, MessageBoxImage.Error);
             //LogHelper.WriteError(e.Exception, "UI线程全局异常");
             e.Handled = true;
             //throw e.Exception;
@@ -81,7 +79,15 @@ namespace DbTool
             var exception = e.ExceptionObject as Exception;
             if (exception != null)
             {
-                HandyControl.Controls.MessageBox.Show(exception.Message, "非UI线程全局异常", MessageBoxButton.OK, MessageBoxImage.Error);
+                var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+                {
+                    Title = "非UI线程全局异常",
+                    Content = exception.Message,
+                    //CloseButtonIcon = new SymbolIcon(SymbolRegular.Dismiss24),
+
+                };
+                uiMessageBox.ShowDialogAsync();
+               // System.Windows.MessageBox.Show(exception.Message, "非UI线程全局异常",  System.Windows.MessageBoxButton.OK, MessageBoxImage.Error);
                 //LogHelper.WriteError(exception, "非UI线程全局异常");
                 //throw exception;
             }

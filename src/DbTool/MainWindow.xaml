@@ -9,11 +9,14 @@
     xmlns:viewModels="clr-namespace:DbTool.ViewModels"
     xmlns:views="clr-namespace:DbTool.Views"
     xmlns:langs="clr-namespace:DbTool.Properties.Langs"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="DbTool"
     Width="1300"
     Height="750"
     ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
     <Window.DataContext>
         <viewModels:MainWindowViewModel />
@@ -22,17 +25,17 @@
 
         <TabControl>
             <TabItem Header="{x:Static langs:Lang.DatabaseFirst}" d:Header="数据库优先">
-                <Grid Background="#FFE5E5E5">
+                <Grid >
                     <Frame Source="Views/PageDbFirst.xaml" />
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static langs:Lang.CodeFirst}" d:Header="代码优先">
-                <Grid Background="#FFE5E5E5">
+                <Grid >
                     <Frame Source="Views/PageCodeFirst.xaml" />
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static langs:Lang.Settings}" d:Header="设置">
-                <Grid Background="#FFE5E5E5">
+                <Grid >
                     <Frame Source="Views/PageSettings.xaml" />
                 </Grid>
             </TabItem>

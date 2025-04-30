@@ -8,7 +8,9 @@
     xmlns:local="clr-namespace:DbTool.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:DbTool.ViewModels"
-    Title="PageCodeFirst"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="PageCodeFirst" ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     d:DesignHeight="670"
     d:DesignWidth="900"
     mc:Ignorable="d">

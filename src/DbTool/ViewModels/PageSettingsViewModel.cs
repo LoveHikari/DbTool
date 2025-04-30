@@ -26,7 +26,7 @@ public class PageSettingsViewModel
             {
                 ConfigManager.Instance.UpdateConfig(this.Model.DbSet);
                 
-                HandyControl.Controls.MessageBox.Success("修改成功", "提示");
+                //HandyControl.Controls.MessageBox.Success("修改成功", "提示");
                 App.Restart();
             });
         }

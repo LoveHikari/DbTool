@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using MessageBoxResult = Wpf.Ui.Controls.MessageBoxResult;
 
 namespace DbTool.ViewModels
 {
@@ -10,10 +11,18 @@ namespace DbTool.ViewModels
         /// <summary>
         /// 关闭窗口
         /// </summary>
-        public ICommand ClosingCommand => new RelayCommand<object>((obj) =>
+        public ICommand ClosingCommand => new AsyncRelayCommand<object>(async (obj) =>
         {
             CancelEventArgs? e = obj as CancelEventArgs;
-            if (HandyControl.Controls.MessageBox.Ask("确定要关闭软件？") == MessageBoxResult.Cancel)
+            var uiMessageBox = new Wpf.Ui.Controls.MessageBox
+            {
+                Title = "提示",
+                Content = "确定要关闭软件？",
+                PrimaryButtonText = "确认",
+                CloseButtonText = "取消",
+            };
+            var messageBoxResult = await uiMessageBox.ShowDialogAsync();
+            if (messageBoxResult == MessageBoxResult.None)
             {
                 e.Cancel = true;
             }
