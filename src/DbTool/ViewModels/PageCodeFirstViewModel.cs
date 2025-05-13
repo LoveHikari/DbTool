@@ -52,30 +52,44 @@ namespace DbTool.ViewModels
         {
             List<TableStructureTreeNode> tables = new List<TableStructureTreeNode>();
             // 解析类名
-            MatchCollection classMatches = Regex.Matches(code, @"((?:\[.*?\]\s*)*)(public|private|protected|internal)?\s*(static|sealed|abstract)?\s*class\s+(\w+)");
+            MatchCollection classMatches = Regex.Matches(code, @"((?:\[.*?\]\s*)*)(public|private|protected|internal)?\s*(static|sealed|abstract)?\s*(partial)?\s*class\s+(\w+)");
             foreach (Match classMatch in classMatches)
             {
                 var tableStructure = new TableStructureTreeNode();
 
                 var attributeMatchs = Regex.Matches(classMatch.Groups[1].Value, @"\[.*?\]");
                 var tableName = "";
+                string classComment = "";
                 foreach (Match attributeMatch in attributeMatchs)
                 {
                     var reg = Regex.Match(attributeMatch.Value, "\\[.*?Table\\(\"(.*?)\"\\)\\]");
-                    tableName = reg.Groups[1].Value;
-                    if (string.IsNullOrWhiteSpace(tableName))
+                    if (reg.Length > 0)
                     {
-                        tableName = classMatch.Groups[4].Value;
+                        tableName = reg.Groups[1].Value;
+                        if (string.IsNullOrWhiteSpace(tableName))
+                        {
+                            tableName = classMatch.Groups[5].Value;
+                        }
+                        tableStructure.ColumnName = tableName;
+                    }
+                    reg = Regex.Match(attributeMatch.Value, "\\[.*?Comment\\(\"(.*?)\"\\)\\]");
+                    if (reg.Length > 0)
+                    {
+                        classComment = reg.Groups[1].Value;
                     }
                 }
-                tableStructure.ColumnName = tableName;
+                
 
                 // 解析类注释
-                string classComment = ExtractComment(code, classMatch.Index);
                 if (string.IsNullOrWhiteSpace(classComment))
                 {
-                    classComment = tableStructure.ColumnName;
+                    classComment = ExtractComment(code, classMatch.Index);
+                    if (string.IsNullOrWhiteSpace(classComment))
+                    {
+                        classComment = tableStructure.ColumnName;
+                    }
                 }
+                
                 tableStructure.Description = classComment;
 
                 // 解析类中的属性
@@ -106,10 +120,10 @@ namespace DbTool.ViewModels
                         reg = Regex.Match(propertyAttributeMatch.Value, "Column\\(\\s*(\"(.*?)\")?\\s*(?:.*?TypeName.+?\"(.+?)\")?");
                         if (reg.Length > 0)
                         {
+                            propertyType = propertyMatch.Groups[4].Value;
                             typeName = reg.Groups[3].Value;
                             if (string.IsNullOrWhiteSpace(typeName))
                             {
-                                propertyType = propertyMatch.Groups[4].Value;
                                 typeName = CodeCommon.CSToDbType(propertyType.TrimEnd("?"));
                             }
                             propertyName = reg.Groups[2].Value;
