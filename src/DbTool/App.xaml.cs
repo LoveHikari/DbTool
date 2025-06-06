@@ -14,14 +14,6 @@ namespace DbTool
     public partial class App : Application
     {
 
-        public App()
-        {
-            Current.DispatcherUnhandledException += App_OnDispatcherUnhandledException;
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            var lang = ConfigManager.Instance.ConfigParm.DefaultCulture ?? "zh-cn";
-            LangProvider.Instance.Culture = new CultureInfo(lang);
-            //ConfigHelper.Instance.SetLang(lang);
-        }
         private static Mutex _mutex = null;
 
 
@@ -35,6 +27,15 @@ namespace DbTool
                 Application.Current.Shutdown();
                 return;
             }
+
+            Current.DispatcherUnhandledException += App_OnDispatcherUnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            var lang = ConfigManager.Instance.ConfigParm.DefaultCulture ?? "zh-cn";
+            LangProvider.Instance.Culture = new CultureInfo(lang);
+            //ConfigHelper.Instance.SetLang(lang);
+
+
+
             base.OnStartup(e);
         }
         /// <summary>
