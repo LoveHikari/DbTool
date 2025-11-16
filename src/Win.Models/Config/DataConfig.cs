@@ -1,5 +1,6 @@
 ﻿using System;
 using Hikari.Common;
+using Hikari.Common.Xml;
 
 namespace Win.Models.Config
 {
@@ -48,14 +49,14 @@ namespace Win.Models.Config
                     Pwd = "",
                     Uid = ""
                 };
-                XmlHelper.XmlSerilizeToFile(db, _dbPath);
+                XmlSerializer.SerilizeToFile(db, _dbPath);
             }
-            return XmlHelper.XmlDeserialize<Win.Models.DataBaseConfig>(_dbPath);
+            return XmlSerializer.Deserialize<Win.Models.DataBaseConfig>(_dbPath);
         }
 
         public void SetDataBaseConfig(DataBaseConfig db)
         {
-            XmlHelper.XmlSerilizeToFile(db, _dbPath);
+            XmlSerializer.SerilizeToFile(db, _dbPath);
         }
 
         public NamespaceConfig GetNamespaceConfig()
@@ -72,13 +73,13 @@ namespace Win.Models.Config
                     ModelPath = "",
                     ModelSuffix = ""
                 };
-                XmlHelper.XmlSerilizeToFile(db, _nsPath);
+                XmlSerializer.SerilizeToFile(db, _nsPath);
             }
-            return XmlHelper.XmlDeserialize<Win.Models.NamespaceConfig>(_nsPath);
+            return XmlSerializer.Deserialize<Win.Models.NamespaceConfig>(_nsPath);
         }
         public void SetNamespaceConfig(NamespaceConfig db)
         {
-            XmlHelper.XmlSerilizeToFile(db, _nsPath);
+            XmlSerializer.SerilizeToFile(db, _nsPath);
         }
     }
 }

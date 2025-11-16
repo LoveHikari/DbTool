@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity;
 using System.IO;
 using System.Threading;
 using Hikari.Common.Cryptography;
