@@ -10,6 +10,7 @@ using Hikari.Common;
 using Win.Common;
 using Win.DAL.BLL;
 using Win.Models;
+using System.Linq;
 
 namespace DbTool.ViewModels
 {
@@ -31,15 +32,31 @@ namespace DbTool.ViewModels
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Filter = "Model文件(*.cs)|*.cs" // 可以根据需要修改文件过滤器
+                Filter = "Model文件(*.cs)|*.cs", // 可以根据需要修改文件过滤器
+                Multiselect = true // 允许选择多个文件
             };
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                Model.ModelFilePath = openFileDialog.FileName;
-                // 解析文件
-                string content = FileHelper.Read(Model.ModelFilePath);
-                Model.TableStructure = await ParseModel(content);
+                // 存储第一个文件路径，保持向后兼容
+                if (openFileDialog.FileNames.Length > 0)
+                {
+                    Model.ModelFilePath = openFileDialog.FileNames[0];
+                    // 存储所有文件路径到集合中
+                    Model.ModelFilePaths = openFileDialog.FileNames.ToList();
+                }
+                
+                // 解析所有选中的文件
+                List<TableStructureTreeNode> allTables = new List<TableStructureTreeNode>();
+                foreach (string filePath in openFileDialog.FileNames)
+                {
+                    // 解析文件
+                    string content = await FileHelper.ReadAsync(filePath);
+                    List<TableStructureTreeNode> tables = await ParseModel(content);
+                    allTables.AddRange(tables);
+                }
+                
+                Model.TableStructure = allTables;
                 Model.SqlText = GenerateSql(Model.TableStructure);
             }
         });
@@ -226,7 +243,7 @@ namespace DbTool.ViewModels
                 }
                 sb.Remove(sb.Length - 3, 1);
                 sb.AppendLine(")");
-                sb.AppendSpace(2, $"comment '{table.Description}';");
+                sb.AppendSpaceLine(2, $"comment '{table.Description}';");
             }
 
             return sb.ToString();

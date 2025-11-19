@@ -7,12 +7,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:DbTool.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModels="clr-namespace:DbTool.ViewModels"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-    Title="PageCodeFirst" ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
-    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    xmlns:viewModels="clr-namespace:DbTool.ViewModels"
+    Title="PageCodeFirst"
     d:DesignHeight="670"
     d:DesignWidth="900"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
     <Page.DataContext>
         <viewModels:PageCodeFirstViewModel />
@@ -53,13 +54,12 @@
             <TreeView ItemsSource="{Binding Model.TableStructure}">
                 <d:TreeView.ItemsSource>
                     <x:Array xmlns:bean="clr-namespace:DbTool.Bean" Type="{x:Type bean:TableStructureTreeNode}">
-                        <bean:TableStructureTreeNode ColumnName="123">
-                        </bean:TableStructureTreeNode>
+                        <bean:TableStructureTreeNode ColumnName="123" />
                     </x:Array>
                 </d:TreeView.ItemsSource>
                 <TreeView.ItemContainerStyle>
                     <Style TargetType="TreeViewItem">
-                        <Setter Property="IsExpanded" Value="True" />
+                        <Setter Property="IsExpanded" Value="False" />
                     </Style>
                 </TreeView.ItemContainerStyle>
                 <TreeView.ItemTemplate>
@@ -75,10 +75,12 @@
         </DockPanel>
         <Grid
             Grid.Row="1"
-            Grid.Column="1" VerticalAlignment="Stretch"
+            Grid.Column="1"
+            VerticalAlignment="Stretch"
             Background="#FFE5E5E5">
             <TextBox
-                VerticalAlignment="Stretch" VerticalContentAlignment="Top"
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Top"
                 IsReadOnly="True"
                 Text="{Binding Path=Model.SqlText}"
                 VerticalScrollBarVisibility="Auto" />

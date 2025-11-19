@@ -1,7 +1,8 @@
-﻿using Hikari.Mvvm;
+using Hikari.Mvvm;
 using System.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using DbTool.Bean;
+using System.Collections.Generic;
 
 namespace DbTool.Models
 {
@@ -9,12 +10,22 @@ namespace DbTool.Models
     {
         private string _modelFilePath; // 模型文件路径
         /// <summary>
-        /// 模型文件路径
+        /// 模型文件路径（保持向后兼容）
         /// </summary>
         public string ModelFilePath
         {
             get => _modelFilePath;
             set { _modelFilePath = value; OnPropertyChanged(); }
+        }
+        
+        private List<string> _modelFilePaths = new List<string>(); // 模型文件路径集合
+        /// <summary>
+        /// 模型文件路径集合
+        /// </summary>
+        public List<string> ModelFilePaths
+        {
+            get => _modelFilePaths;
+            set { _modelFilePaths = value; OnPropertyChanged(); }
         }
         
         // 是否生成数据库描述
