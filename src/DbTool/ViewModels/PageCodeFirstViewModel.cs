@@ -171,9 +171,14 @@ namespace DbTool.ViewModels
 
                     }
 
-                    if (propertyType.IndexOf("?") > 0)
+                    if (propertyType.IndexOf("?", StringComparison.CurrentCulture) > 0)
                     {
                         node.IsCanNull = true;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(propertyName))
+                    {
+                        continue;
                     }
 
                     node.ColumnName = propertyName;
